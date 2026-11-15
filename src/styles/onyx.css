@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --agy-canvas: #0B0D10;
+  --agy-surface: #13161B;
+  --agy-surface-elevated: #181C23;
+  --agy-border: #232832;
+  --agy-border-subtle: #1B2028;
+  --agy-text-primary: #E6EAF0;
+  --agy-text-secondary: #9BA3B0;
+  --agy-text-muted: #646D7A;
+  --agy-accent: #8AB4F8;
+  --agy-accent-dim: rgba(138, 180, 248, 0.12);
+  --agy-warn: #F29900;
+  --agy-danger: #F28B82;
+  --agy-ok: #81C995;
+}
+
+body {
+  background-color: var(--agy-canvas);
+  color: var(--agy-text-primary);
+  font-family: 'Google Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv02", "tnum";
+  margin: 0;
+  padding: 0;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.onyx-card {
+  background-color: #13161B;
+  border: 1px solid #232832;
+  border-radius: 10px;
+}
+
+.onyx-card-interactive {
+  background-color: #13161B;
+  border: 1px solid #232832;
+  border-radius: 10px;
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+.onyx-card-interactive:hover {
+  background-color: #171B22;
+  border-color: #343C4A;
+}
+
+.onyx-pill {
+  background-color: #181C23;
+  border: 1px solid #232832;
+  border-radius: 9999px;
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0D10;
+}
+::-webkit-scrollbar-thumb {
+  background: #232832;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #343C4A;
+}

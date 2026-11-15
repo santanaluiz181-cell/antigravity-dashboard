@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" width="100%" height="100%">
+  <rect width="1100" height="360" rx="16" fill="#0B0D10" stroke="#232832" stroke-width="2"/>
+  <text x="36" y="42" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="18" font-weight="700">Billion-Context + Antigravity Onyx Architecture (Zero Binary Patching)</text>
+  <text x="36" y="64" fill="#9BA3B0" font-family="JetBrains Mono, monospace" font-size="11">LOCAL FILESYSTEM &amp; DAEMON BRIDGE · HONO :4320 · REACT 19 VITE :5175 · NODE:SQLITE NATIVE</text>
+
+  <!-- Left Column: Local Sources -->
+  <rect x="36" y="90" width="280" height="240" rx="12" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  <text x="56" y="118" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">1. WINDOWS DATA SOURCES</text>
+  <rect x="54" y="134" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="66" y="156" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">~/.gemini/config/skills &amp; plugins</text>
+  <rect x="54" y="180" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="66" y="202" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">~/.gemini/antigravity/brain/*.jsonl</text>
+  <rect x="54" y="226" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="66" y="248" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">claude-mem :37777 + Kitsune :4319</text>
+  <rect x="54" y="272" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="66" y="294" fill="#81C995" font-family="JetBrains Mono, monospace" font-size="11">.graphify.json + PROJECT_MAP.md</text>
+
+  <!-- Center Column: Hono + Engines -->
+  <rect x="390" y="90" width="320" height="240" rx="12" fill="#13161B" stroke="#343C4A" stroke-width="1.5"/>
+  <text x="410" y="118" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">2. HONO ENGINE (:4320)</text>
+  <rect x="410" y="134" width="280" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="424" y="156" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">tokenScanner + SHA-256 Quarantine</text>
+  <rect x="410" y="180" width="280" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="424" y="202" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">node:sqlite Read-Only SQL Guard</text>
+  <rect x="410" y="226" width="280" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="424" y="248" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">tools/gpu_asr.py (ggml_vulkan GPU)</text>
+  <rect x="410" y="272" width="280" height="36" rx="6" fill="#15241C" stroke="#81C995" stroke-opacity="0.4"/>
+  <text x="424" y="294" fill="#81C995" font-family="JetBrains Mono, monospace" font-size="11">assertNeverTouchesOfficialBinaries()</text>
+
+  <!-- Right Column: Onyx UI -->
+  <rect x="784" y="90" width="280" height="240" rx="12" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  <text x="804" y="118" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">3. ONYX STUDIO UI (:5175)</text>
+  <rect x="802" y="134" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="816" y="156" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Context Budget &amp; 1-Click Presets</text>
+  <rect x="802" y="180" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="816" y="202" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Brain Stream &amp; /generative_ui</text>
+  <rect x="802" y="226" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="816" y="248" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Interactive Chart + Sources Pane</text>
+  <rect x="802" y="272" width="244" height="36" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="816" y="294" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Post-Meeting Human Click Gate</text>
+
+  <!-- Connectors -->
+  <line x1="316" y1="210" x2="390" y2="210" stroke="#8AB4F8" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="710" y1="210" x2="784" y2="210" stroke="#8AB4F8" stroke-width="2" stroke-dasharray="4 4"/>
+</svg>

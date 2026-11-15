@@ -1,0 +1,916 @@
+{
+  "schema": "graphify-ponytail/v1",
+  "generatedAt": "2026-11-15T23:39:59.781Z",
+  "root": "E:/Downloads_C/Antigravity Dashboard",
+  "stats": {
+    "totalFilesIndexed": 20,
+    "totalEdges": 48
+  },
+  "ponytailNavigation": {
+    "directive": "Use view_file with StartLine/EndLine around symbol.line instead of reading full files.",
+    "topHubs": [
+      {
+        "file": "server/services/tokenScanner.ts",
+        "inDegree": 0,
+        "outDegree": 3,
+        "symbolCount": 13,
+        "lines": 333
+      },
+      {
+        "file": "server/services/profileManager.ts",
+        "inDegree": 0,
+        "outDegree": 4,
+        "symbolCount": 12,
+        "lines": 325
+      },
+      {
+        "file": "server/services/sqliteInspector.ts",
+        "inDegree": 0,
+        "outDegree": 4,
+        "symbolCount": 12,
+        "lines": 320
+      },
+      {
+        "file": "server/paths.ts",
+        "inDegree": 0,
+        "outDegree": 2,
+        "symbolCount": 11,
+        "lines": 70
+      },
+      {
+        "file": "src/App.tsx",
+        "inDegree": 1,
+        "outDegree": 3,
+        "symbolCount": 7,
+        "lines": 202
+      },
+      {
+        "file": "server/services/meetingPipeline.ts",
+        "inDegree": 0,
+        "outDegree": 5,
+        "symbolCount": 8,
+        "lines": 214
+      },
+      {
+        "file": "server/services/transcriptReader.ts",
+        "inDegree": 0,
+        "outDegree": 3,
+        "symbolCount": 7,
+        "lines": 239
+      },
+      {
+        "file": "organizer.md",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbolCount": 6,
+        "lines": 29
+      },
+      {
+        "file": "src/components/BottomCommandBar.tsx",
+        "inDegree": 1,
+        "outDegree": 1,
+        "symbolCount": 2,
+        "lines": 142
+      },
+      {
+        "file": "src/components/Module1BloatCenter.tsx",
+        "inDegree": 0,
+        "outDegree": 1,
+        "symbolCount": 4,
+        "lines": 420
+      },
+      {
+        "file": "src/components/Module2LiveSessions.tsx",
+        "inDegree": 0,
+        "outDegree": 1,
+        "symbolCount": 4,
+        "lines": 289
+      },
+      {
+        "file": "src/components/Module3DataSourcesPane.tsx",
+        "inDegree": 0,
+        "outDegree": 1,
+        "symbolCount": 4,
+        "lines": 430
+      },
+      {
+        "file": "src/components/TopTelemetryBar.tsx",
+        "inDegree": 1,
+        "outDegree": 2,
+        "symbolCount": 1,
+        "lines": 148
+      },
+      {
+        "file": "src/components/AntigravityLogo.tsx",
+        "inDegree": 1,
+        "outDegree": 1,
+        "symbolCount": 0,
+        "lines": 26
+      },
+      {
+        "file": "src/components/Module4PostMeetingMvp.tsx",
+        "inDegree": 0,
+        "outDegree": 1,
+        "symbolCount": 3,
+        "lines": 350
+      }
+    ]
+  },
+  "nodes": {
+    "organizer.md": {
+      "lines": 29,
+      "sha8": "81111b57",
+      "symbols": [
+        {
+          "kind": "heading",
+          "name": "Auto-Organizer Checkpoint — Antigravity Dashboard",
+          "line": 1
+        },
+        {
+          "kind": "heading",
+          "name": "1. Meta Geral",
+          "line": 3
+        },
+        {
+          "kind": "heading",
+          "name": "2. Arquivos Criados / Modificados",
+          "line": 6
+        },
+        {
+          "kind": "heading",
+          "name": "3. Decisões Arquiteturais Fixadas",
+          "line": 18
+        },
+        {
+          "kind": "heading",
+          "name": "4. Estado Atual",
+          "line": 23
+        },
+        {
+          "kind": "heading",
+          "name": "5. Próximo Passo Imediato",
+          "line": 27
+        }
+      ]
+    },
+    "vite.config.ts": {
+      "lines": 18,
+      "sha8": "3295e5c6",
+      "symbols": []
+    },
+    "vitest.config.ts": {
+      "lines": 10,
+      "sha8": "8455144c",
+      "symbols": []
+    },
+    "tests/dashboard.test.ts": {
+      "lines": 140,
+      "sha8": "e210aaf8",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ScannedItem",
+          "line": 14
+        }
+      ]
+    },
+    "src/App.tsx": {
+      "lines": 202,
+      "sha8": "0ecdeb0d",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "BloatScanReportDto",
+          "line": 6
+        },
+        {
+          "kind": "type",
+          "name": "ProfilePresetDto",
+          "line": 7
+        },
+        {
+          "kind": "type",
+          "name": "KitsuneStatusDto",
+          "line": 11
+        },
+        {
+          "kind": "type",
+          "name": "SessionSummaryDto",
+          "line": 12
+        },
+        {
+          "kind": "type",
+          "name": "DataSourceQueryResultDto",
+          "line": 16
+        },
+        {
+          "kind": "type",
+          "name": "DatasetMetaDto",
+          "line": 17
+        },
+        {
+          "kind": "type",
+          "name": "MeetingSessionDto",
+          "line": 21
+        }
+      ]
+    },
+    "src/main.tsx": {
+      "lines": 11,
+      "sha8": "4981ad1a",
+      "symbols": []
+    },
+    "src/components/AntigravityLogo.tsx": {
+      "lines": 26,
+      "sha8": "e27e57d5",
+      "symbols": []
+    },
+    "src/components/BottomCommandBar.tsx": {
+      "lines": 142,
+      "sha8": "ea50c759",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ActiveTabId",
+          "line": 12
+        },
+        {
+          "kind": "type",
+          "name": "BottomCommandBarProps",
+          "line": 14
+        }
+      ]
+    },
+    "src/components/Module1BloatCenter.tsx": {
+      "lines": 420,
+      "sha8": "fb58748d",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ScannedItemDto",
+          "line": 13
+        },
+        {
+          "kind": "type",
+          "name": "BloatScanReportDto",
+          "line": 30
+        },
+        {
+          "kind": "type",
+          "name": "ProfilePresetDto",
+          "line": 45
+        },
+        {
+          "kind": "type",
+          "name": "Module1Props",
+          "line": 54
+        }
+      ]
+    },
+    "src/components/Module2LiveSessions.tsx": {
+      "lines": 289,
+      "sha8": "eb67db18",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "SessionSummaryDto",
+          "line": 12
+        },
+        {
+          "kind": "type",
+          "name": "TranscriptStepDto",
+          "line": 24
+        },
+        {
+          "kind": "type",
+          "name": "KitsuneStatusDto",
+          "line": 35
+        },
+        {
+          "kind": "type",
+          "name": "Module2Props",
+          "line": 44
+        }
+      ]
+    },
+    "src/components/Module3DataSourcesPane.tsx": {
+      "lines": 430,
+      "sha8": "989438c6",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ColumnSchemaDto",
+          "line": 12
+        },
+        {
+          "kind": "type",
+          "name": "DataSourceQueryResultDto",
+          "line": 18
+        },
+        {
+          "kind": "type",
+          "name": "DatasetMetaDto",
+          "line": 33
+        },
+        {
+          "kind": "type",
+          "name": "Module3Props",
+          "line": 41
+        }
+      ]
+    },
+    "src/components/Module4PostMeetingMvp.tsx": {
+      "lines": 350,
+      "sha8": "01850f93",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "StagedMcpActionDto",
+          "line": 13
+        },
+        {
+          "kind": "type",
+          "name": "MeetingSessionDto",
+          "line": 26
+        },
+        {
+          "kind": "type",
+          "name": "Module4Props",
+          "line": 38
+        }
+      ]
+    },
+    "src/components/TopTelemetryBar.tsx": {
+      "lines": 148,
+      "sha8": "f865e81a",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "TopTelemetryBarProps",
+          "line": 12
+        }
+      ]
+    },
+    "server/index.ts": {
+      "lines": 234,
+      "sha8": "745043ec",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ProfilePreset",
+          "line": 13
+        },
+        {
+          "kind": "export",
+          "name": "app",
+          "line": 35
+        }
+      ]
+    },
+    "server/paths.ts": {
+      "lines": 70,
+      "sha8": "850c348c",
+      "symbols": [
+        {
+          "kind": "export",
+          "name": "USER_HOME",
+          "line": 4
+        },
+        {
+          "kind": "export",
+          "name": "GEMINI_ROOT",
+          "line": 5
+        },
+        {
+          "kind": "export",
+          "name": "ANTIGRAVITY_DIR",
+          "line": 6
+        },
+        {
+          "kind": "export",
+          "name": "CONFIG_DIR",
+          "line": 7
+        },
+        {
+          "kind": "export",
+          "name": "WORKSPACE_ROOT",
+          "line": 8
+        },
+        {
+          "kind": "export",
+          "name": "BACKUPS_DIR",
+          "line": 9
+        },
+        {
+          "kind": "export",
+          "name": "SAME_DRIVE_QUARANTINE_DIR",
+          "line": 10
+        },
+        {
+          "kind": "export",
+          "name": "DATA_PATHS",
+          "line": 12
+        },
+        {
+          "kind": "fn",
+          "name": "normalizeWinPath",
+          "line": 37
+        },
+        {
+          "kind": "fn",
+          "name": "assertNeverTouchesOfficialBinaries",
+          "line": 45
+        },
+        {
+          "kind": "fn",
+          "name": "isAllowedReadPath",
+          "line": 58
+        }
+      ]
+    },
+    "server/services/meetingPipeline.ts": {
+      "lines": 214,
+      "sha8": "5445a14d",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "StagedMcpAction",
+          "line": 9
+        },
+        {
+          "kind": "type",
+          "name": "MeetingSessionRecord",
+          "line": 22
+        },
+        {
+          "kind": "fn",
+          "name": "getMeetingsStoragePath",
+          "line": 36
+        },
+        {
+          "kind": "fn",
+          "name": "persistMeetingsStore",
+          "line": 41
+        },
+        {
+          "kind": "fn",
+          "name": "loadMeetingsStore",
+          "line": 46
+        },
+        {
+          "kind": "fn",
+          "name": "extractStructuredMeetingIntelligence",
+          "line": 62
+        },
+        {
+          "kind": "fn",
+          "name": "transcribeAudioViaGpuAsr",
+          "line": 135
+        },
+        {
+          "kind": "fn",
+          "name": "approveOrRejectStagedAction",
+          "line": 172
+        }
+      ]
+    },
+    "server/services/profileManager.ts": {
+      "lines": 325,
+      "sha8": "7499c2c5",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ProfilePreset",
+          "line": 13
+        },
+        {
+          "kind": "type",
+          "name": "QuarantineLedgerEntry",
+          "line": 78
+        },
+        {
+          "kind": "type",
+          "name": "ProfileApplyResult",
+          "line": 86
+        },
+        {
+          "kind": "fn",
+          "name": "withProfileLock",
+          "line": 98
+        },
+        {
+          "kind": "fn",
+          "name": "ensureBackupDirs",
+          "line": 110
+        },
+        {
+          "kind": "fn",
+          "name": "getLedgerPath",
+          "line": 119
+        },
+        {
+          "kind": "fn",
+          "name": "getActiveStatePath",
+          "line": 124
+        },
+        {
+          "kind": "fn",
+          "name": "readQuarantineLedger",
+          "line": 129
+        },
+        {
+          "kind": "fn",
+          "name": "writeQuarantineLedger",
+          "line": 139
+        },
+        {
+          "kind": "fn",
+          "name": "getActiveProfileState",
+          "line": 145
+        },
+        {
+          "kind": "fn",
+          "name": "moveDirectoryAtomic",
+          "line": 157
+        },
+        {
+          "kind": "fn",
+          "name": "applyProfilePreset",
+          "line": 184
+        }
+      ]
+    },
+    "server/services/sqliteInspector.ts": {
+      "lines": 320,
+      "sha8": "be92c3b1",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ColumnSchema",
+          "line": 6
+        },
+        {
+          "kind": "type",
+          "name": "DataSourceQueryResult",
+          "line": 12
+        },
+        {
+          "kind": "type",
+          "name": "RegisteredDataset",
+          "line": 27
+        },
+        {
+          "kind": "fn",
+          "name": "assertReadOnlySelectSql",
+          "line": 40
+        },
+        {
+          "kind": "fn",
+          "name": "sanitizeIdentifier",
+          "line": 63
+        },
+        {
+          "kind": "fn",
+          "name": "parseCsvLine",
+          "line": 73
+        },
+        {
+          "kind": "fn",
+          "name": "inferSqlType",
+          "line": 97
+        },
+        {
+          "kind": "fn",
+          "name": "ingestStructuredRecords",
+          "line": 119
+        },
+        {
+          "kind": "fn",
+          "name": "ingestCsvContent",
+          "line": 193
+        },
+        {
+          "kind": "fn",
+          "name": "executeDatasetQuery",
+          "line": 212
+        },
+        {
+          "kind": "fn",
+          "name": "listDatasets",
+          "line": 259
+        },
+        {
+          "kind": "fn",
+          "name": "ensureDefaultBootDataset",
+          "line": 269
+        }
+      ]
+    },
+    "server/services/tokenScanner.ts": {
+      "lines": 333,
+      "sha8": "93128e1f",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ScannedItem",
+          "line": 5
+        },
+        {
+          "kind": "type",
+          "name": "BloatScanReport",
+          "line": 22
+        },
+        {
+          "kind": "export",
+          "name": "BLOAT_LINE_THRESHOLD",
+          "line": 37
+        },
+        {
+          "kind": "export",
+          "name": "BLOAT_TOKEN_THRESHOLD",
+          "line": 38
+        },
+        {
+          "kind": "export",
+          "name": "SYSTEM_INDEX_BUDGET_TOKENS",
+          "line": 39
+        },
+        {
+          "kind": "fn",
+          "name": "estimateTokensFromText",
+          "line": 41
+        },
+        {
+          "kind": "fn",
+          "name": "countLines",
+          "line": 52
+        },
+        {
+          "kind": "fn",
+          "name": "extractFrontmatterDescription",
+          "line": 59
+        },
+        {
+          "kind": "fn",
+          "name": "scanSkillFolder",
+          "line": 75
+        },
+        {
+          "kind": "fn",
+          "name": "scanRuleFiles",
+          "line": 127
+        },
+        {
+          "kind": "fn",
+          "name": "scanMcpServers",
+          "line": 168
+        },
+        {
+          "kind": "fn",
+          "name": "annotateDuplicates",
+          "line": 230
+        },
+        {
+          "kind": "fn",
+          "name": "runFullBloatScan",
+          "line": 263
+        }
+      ]
+    },
+    "server/services/transcriptReader.ts": {
+      "lines": 239,
+      "sha8": "86f5eb8e",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "SessionSummary",
+          "line": 5
+        },
+        {
+          "kind": "type",
+          "name": "TranscriptStep",
+          "line": 17
+        },
+        {
+          "kind": "type",
+          "name": "KitsuneStatus",
+          "line": 28
+        },
+        {
+          "kind": "fn",
+          "name": "listBrainSessions",
+          "line": 38
+        },
+        {
+          "kind": "fn",
+          "name": "readSessionTranscriptSteps",
+          "line": 114
+        },
+        {
+          "kind": "fn",
+          "name": "listGlobalHtmlArtifacts",
+          "line": 167
+        },
+        {
+          "kind": "fn",
+          "name": "probeKitsuneAndNotch",
+          "line": 185
+        }
+      ]
+    }
+  },
+  "edges": [
+    {
+      "from": "vite.config.ts",
+      "to": "vite"
+    },
+    {
+      "from": "vite.config.ts",
+      "to": "@vitejs/plugin-react"
+    },
+    {
+      "from": "vite.config.ts",
+      "to": "@tailwindcss/vite"
+    },
+    {
+      "from": "vitest.config.ts",
+      "to": "vitest/config"
+    },
+    {
+      "from": "tests/dashboard.test.ts",
+      "to": "vitest"
+    },
+    {
+      "from": "tests/dashboard.test.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "src/App.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/App.tsx",
+      "to": "./components/TopTelemetryBar"
+    },
+    {
+      "from": "src/App.tsx",
+      "to": "./components/BottomCommandBar"
+    },
+    {
+      "from": "src/main.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/main.tsx",
+      "to": "react-dom/client"
+    },
+    {
+      "from": "src/main.tsx",
+      "to": "./App"
+    },
+    {
+      "from": "src/components/AntigravityLogo.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/BottomCommandBar.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/Module1BloatCenter.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/Module2LiveSessions.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/Module3DataSourcesPane.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/Module4PostMeetingMvp.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/TopTelemetryBar.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/TopTelemetryBar.tsx",
+      "to": "./AntigravityLogo"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "hono"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "hono/cors"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "@hono/node-server"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "node:fs"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "./paths.js"
+    },
+    {
+      "from": "server/index.ts",
+      "to": "./services/tokenScanner.js"
+    },
+    {
+      "from": "server/paths.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/paths.ts",
+      "to": "node:os"
+    },
+    {
+      "from": "server/services/meetingPipeline.ts",
+      "to": "node:fs"
+    },
+    {
+      "from": "server/services/meetingPipeline.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/services/meetingPipeline.ts",
+      "to": "node:child_process"
+    },
+    {
+      "from": "server/services/meetingPipeline.ts",
+      "to": "node:util"
+    },
+    {
+      "from": "server/services/meetingPipeline.ts",
+      "to": "../paths.js"
+    },
+    {
+      "from": "server/services/profileManager.ts",
+      "to": "node:fs"
+    },
+    {
+      "from": "server/services/profileManager.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/services/profileManager.ts",
+      "to": "node:crypto"
+    },
+    {
+      "from": "server/services/profileManager.ts",
+      "to": "./tokenScanner.js"
+    },
+    {
+      "from": "server/services/sqliteInspector.ts",
+      "to": "node:sqlite"
+    },
+    {
+      "from": "server/services/sqliteInspector.ts",
+      "to": "node:fs"
+    },
+    {
+      "from": "server/services/sqliteInspector.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/services/sqliteInspector.ts",
+      "to": "../paths.js"
+    },
+    {
+      "from": "server/services/tokenScanner.ts",
+      "to": "node:fs"
+    },
+    {
+      "from": "server/services/tokenScanner.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/services/tokenScanner.ts",
+      "to": "../paths.js"
+    },
+    {
+      "from": "server/services/transcriptReader.ts",
+      "to": "node:fs"
+    },
+    {
+      "from": "server/services/transcriptReader.ts",
+      "to": "node:path"
+    },
+    {
+      "from": "server/services/transcriptReader.ts",
+      "to": "../paths.js"
+    }
+  ]
+}

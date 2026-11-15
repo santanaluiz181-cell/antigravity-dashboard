@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="onyxBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0D10"/>
+      <stop offset="55%" stop-color="#11151C"/>
+      <stop offset="100%" stop-color="#0B0D10"/>
+    </linearGradient>
+    <linearGradient id="googleBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8AB4F8"/>
+      <stop offset="100%" stop-color="#669DF6"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#181C23" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1200" height="420" rx="18" fill="url(#onyxBg)" stroke="#232832" stroke-width="2"/>
+  <rect width="1200" height="420" rx="18" fill="url(#grid)" opacity="0.65"/>
+
+  <!-- Top Telemetry Header Mock -->
+  <rect x="28" y="24" width="1144" height="52" rx="10" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  
+  <!-- Antigravity Mark -->
+  <rect x="44" y="34" width="32" height="32" rx="7" fill="#0B0D10" stroke="#232832" stroke-width="1.5"/>
+  <path d="M60 40 L67.5 56 H63.6 L61.6 51.5 H58.4 L56.4 56 H52.5 L60 40 Z" fill="#E6EAF0"/>
+  <circle cx="60" cy="59.5" r="1.6" fill="#8AB4F8"/>
+
+  <text x="88" y="48" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="14" font-weight="700">Google Antigravity — Onyx Studio</text>
+  <text x="88" y="64" fill="#646D7A" font-family="JetBrains Mono, monospace" font-size="11">NOV-2026 DESIGN SYSTEM · ZERO BINARY PATCHING · TOS SECTION 6 SAFE</text>
+
+  <!-- Status Pills -->
+  <rect x="650" y="36" width="170" height="28" rx="14" fill="#181C23" stroke="#232832"/>
+  <circle cx="668" cy="50" r="4" fill="#81C995"/>
+  <text x="680" y="54" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">claude-mem :37777</text>
+
+  <rect x="832" y="36" width="166" height="28" rx="14" fill="#181C23" stroke="#232832"/>
+  <circle cx="850" cy="50" r="4" fill="#8AB4F8"/>
+  <text x="862" y="54" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="11">Graphify -98.3%</text>
+
+  <rect x="1010" y="36" width="146" height="28" rx="14" fill="#181C23" stroke="#232832"/>
+  <circle cx="1028" cy="50" r="4" fill="#81C995"/>
+  <text x="1040" y="54" fill="#81C995" font-family="JetBrains Mono, monospace" font-size="11">ToS Safe Guard</text>
+
+  <!-- Main Title Area -->
+  <text x="48" y="136" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="36" font-weight="700" letter-spacing="-0.5">Antigravity Control &amp; Data Studio</text>
+  <text x="48" y="168" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="16">Context &amp; Token-Bloat Control · Live Brain Transcripts · SQL Sources Inspector · GPU Meeting Executor</text>
+
+  <!-- 4 Module Cards -->
+  <!-- Card 1 -->
+  <rect x="44" y="198" width="264" height="142" rx="12" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  <text x="62" y="224" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">01 / BLOAT CONTROL</text>
+  <text x="62" y="248" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="15" font-weight="600">Token &amp; Skill Quarantine</text>
+  <text x="62" y="270" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Detects duplicate skills &amp; &gt;250L</text>
+  <text x="62" y="288" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">rules. 1-Click SHA-256 Presets.</text>
+  <rect x="62" y="304" width="228" height="8" rx="4" fill="#0B0D10" stroke="#232832"/>
+  <rect x="62" y="304" width="142" height="8" rx="4" fill="url(#googleBlue)"/>
+  <text x="62" y="328" fill="#81C995" font-family="JetBrains Mono, monospace" font-size="10">-64% System Index Bloat</text>
+
+  <!-- Card 2 -->
+  <rect x="324" y="198" width="264" height="142" rx="12" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  <text x="342" y="224" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">02 / LIVE SESSIONS</text>
+  <text x="342" y="248" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="15" font-weight="600">Brain + Kitsune + Mem</text>
+  <text x="342" y="270" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Streams transcript.jsonl, Kitsune</text>
+  <text x="342" y="288" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">:4319, claude-mem :37777 &amp; HTML.</text>
+  <rect x="342" y="306" width="110" height="22" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="352" y="321" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="10">20 AST Nodes</text>
+  <rect x="460" y="306" width="110" height="22" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="470" y="321" fill="#81C995" font-family="JetBrains Mono, monospace" font-size="10">48 AST Edges</text>
+
+  <!-- Card 3 -->
+  <rect x="604" y="198" width="264" height="142" rx="12" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  <text x="622" y="224" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">03 / DATA + SOURCES</text>
+  <text x="622" y="248" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="15" font-weight="600">SQLite Lineage Inspector</text>
+  <text x="622" y="270" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Drop CSV/JSON/SQLite. Left chart</text>
+  <text x="622" y="288" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">+ Right Read-Only SQL provenance.</text>
+  <rect x="622" y="306" width="228" height="22" rx="6" fill="#0B0D10" stroke="#232832"/>
+  <text x="632" y="321" fill="#E6EAF0" font-family="JetBrains Mono, monospace" font-size="10">SELECT * FROM tbl LIMIT 100</text>
+
+  <!-- Card 4 -->
+  <rect x="884" y="198" width="272" height="142" rx="12" fill="#13161B" stroke="#232832" stroke-width="1.5"/>
+  <text x="902" y="224" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">04 / MEETING EXECUTOR</text>
+  <text x="902" y="248" fill="#E6EAF0" font-family="Inter, Segoe UI, sans-serif" font-size="15" font-weight="600">Vulkan GPU ASR + Gate</text>
+  <text x="902" y="270" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">Routes audio to tools/gpu_asr.py</text>
+  <text x="902" y="288" fill="#9BA3B0" font-family="Inter, Segoe UI, sans-serif" font-size="12">(&amp; ggml_vulkan). Human click gate.</text>
+  <rect x="902" y="306" width="236" height="22" rx="6" fill="#15241C" stroke="#81C995" stroke-opacity="0.4"/>
+  <text x="914" y="321" fill="#81C995" font-family="JetBrains Mono, monospace" font-size="10">✓ HUMAN APPROVAL REQUIRED</text>
+
+  <!-- Bottom-Anchored M3 Command Bar Mock -->
+  <rect x="180" y="358" width="840" height="42" rx="14" fill="#13161B" stroke="#343C4A" stroke-width="1.5"/>
+  <text x="206" y="383" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="11">⌘/Ctrl+K</text>
+  <text x="280" y="383" fill="#646D7A" font-family="Inter, Segoe UI, sans-serif" font-size="12">Filter skills, MCP servers, brain transcripts, or run read-only SQL...</text>
+  <rect x="880" y="366" width="124" height="26" rx="8" fill="#1F2531" stroke="#8AB4F8" stroke-opacity="0.5"/>
+  <text x="900" y="383" fill="#8AB4F8" font-family="JetBrains Mono, monospace" font-size="11">★ Coding Lean</text>
+</svg>
