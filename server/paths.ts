@@ -8,6 +8,11 @@ export const CONFIG_DIR = path.join(GEMINI_ROOT, 'config');
 export const WORKSPACE_ROOT = path.resolve(process.cwd());
 export const BACKUPS_DIR = path.join(WORKSPACE_ROOT, 'backups');
 export const SAME_DRIVE_QUARANTINE_DIR = path.join(GEMINI_ROOT, 'backups', 'antigravity-dashboard-quarantine');
+export const SUPER_TJTO_TOOLS_DIR = 'E:\\Downloads_C\\SuperAntigravityTJTO\\tools';
+export const GAUSSIAN_SPLAT_ENGINE_DIR = path.join(WORKSPACE_ROOT, 'engines', 'gaussian-splat-25d');
+export const ROCM_PYTHON = 'E:\\Downloads_C\\VoiceStudio\\.venv\\Scripts\\python.exe';
+export const WGPU_PYTHON =
+  'C:\\Users\\tharcio\\.gemini\\antigravity\\brain\\d8727669-711a-46d0-bc14-e68d40774a68\\scratch\\venv_py311\\Scripts\\python.exe';
 
 export const DATA_PATHS = {
   globalSkillsDir: path.join(CONFIG_DIR, 'skills'),
@@ -26,8 +31,15 @@ export const DATA_PATHS = {
   htmlArtifactsDir: path.join(ANTIGRAVITY_DIR, 'html_artifacts'),
   conversationSummariesDb: path.join(ANTIGRAVITY_DIR, 'conversation_summaries.db'),
   skillsManifestJson: path.join(CONFIG_DIR, 'plugins', 'super-antigravity-tjto', 'skills_manifest.json'),
-  gpuAsrScript: path.join(CONFIG_DIR, 'plugins', 'super-antigravity-tjto', 'tools', 'gpu_asr.py'),
-  skillsPrunerScript: path.join(CONFIG_DIR, 'plugins', 'super-antigravity-tjto', 'tools', 'skills_pruner.py'),
+  gpuAsrScript: path.join(SUPER_TJTO_TOOLS_DIR, 'gpu_asr.py'),
+  watchVideoScript: path.join(SUPER_TJTO_TOOLS_DIR, 'watch_video.py'),
+  semanticLookupScript: path.join(SUPER_TJTO_TOOLS_DIR, 'semantic_lookup.py'),
+  skillsPrunerScript: path.join(SUPER_TJTO_TOOLS_DIR, 'skills_pruner.py'),
+  gaussianSplatTrainScript: path.join(GAUSSIAN_SPLAT_ENGINE_DIR, 'train.py'),
+  gaussianSplatDepthScript: path.join(GAUSSIAN_SPLAT_ENGINE_DIR, 'depth.py'),
+  gaussianSplatViewerHtml: path.join(GAUSSIAN_SPLAT_ENGINE_DIR, 'viewer_25d.html'),
+  knowledgeVaultDb: path.join(BACKUPS_DIR, 'knowledge_vault.db'),
+  splatRunsDir: path.join(BACKUPS_DIR, 'splat_runs'),
   forbiddenBinaries: [
     path.join(GEMINI_ROOT, 'bin', 'agy.exe'),
     path.join(ANTIGRAVITY_DIR, 'bin'),

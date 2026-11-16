@@ -31,6 +31,17 @@ import {
   loadMeetingsStore,
   transcribeAudioViaGpuAsr,
 } from './services/meetingPipeline.js';
+import {
+  approveOrRejectVaultAction,
+  getKnowledgeVaultSnapshot,
+  ingestVideoToVault,
+} from './services/mediaKnowledgeVault.js';
+import {
+  listSplatRuns,
+  resolveSplatArtifactFile,
+  runGaussianSplatEncode,
+  type SplatEncodeRequest,
+} from './services/splatEngineService.js';
 
 export const app = new Hono();
 
@@ -221,6 +232,114 @@ app.post('/api/meetings/approve-action', async (c) => {
     return c.json({ action: updatedAction, meetings: loadMeetingsStore() });
   } catch (err) {
     return c.json({ error: err instanceof Error ? err.message : String(err) }, 400);
+  }
+});
+
+// 5. Media Knowledge Vault (Reels <-> YouTube <-> Meetings Cross-Graph)
+app.get('/api/media/vault', (c) => {
+  const snapshot = getKnowledgeVaultSnapshot();
+  return c.json({
+    ...snapshot,
+    watchVideoScript: DATA_PATHS.watchVideoScript,
+    watchVideoAvailable: fs.existsSync(DATA_PATHS.watchVideoScript),
+    semanticLookupAvailable: fs.existsSync(DATA_PATHS.semanticLookupScript),
+  });
+});
+
+app.get('/api/media/graph', (c) => {
+  const snapshot = getKnowledgeVaultSnapshot();
+  return c.json({
+    nodes: snapshot.nodes.map((n) => ({
+      id: n.id,
+      sourceType: n.sourceType,
+      title: n.title,
+      topics: n.topics,
+      entities: n.entities,
+      ocrCount: n.ocrHighlights.length,
+    })),
+    edges: snapshot.edges,
+  });
+});
+
+app.post('/api/media/ingest-video', async (c) => {
+  try {
+    const body = (await c.req.json()) as {
+      urlOrPath?: string;
+      title?: string;
+      notesFallback?: string;
+      skipSubprocess?: boolean;
+    };
+    if (!body.urlOrPath) {
+      return c.json({ error: 'urlOrPath is required' }, 400);
+    }
+    const result = await ingestVideoToVault({
+      urlOrPath: body.urlOrPath,
+      title: body.title,
+      notesFallback: body.notesFallback,
+      skipSubprocess: body.skipSubprocess,
+    });
+    return c.json({
+      ...result,
+      vault: getKnowledgeVaultSnapshot(),
+    });
+  } catch (err) {
+    return c.json({ error: err instanceof Error ? err.message : String(err) }, 400);
+  }
+});
+
+app.post('/api/media/approve-action', async (c) => {
+  try {
+    const body = (await c.req.json()) as {
+      actionId?: string;
+      decision?: 'APPROVE' | 'REJECT';
+    };
+    if (!body.actionId || !body.decision) {
+      return c.json({ error: 'actionId and decision are required' }, 400);
+    }
+    const updatedAction = approveOrRejectVaultAction(body.actionId, body.decision);
+    return c.json({ action: updatedAction, vault: getKnowledgeVaultSnapshot() });
+  } catch (err) {
+    return c.json({ error: err instanceof Error ? err.message : String(err) }, 400);
+  }
+});
+
+// 6. Gaussian Splat 2.5D Studio (Dual-Backend: ROCm gfx1032 / wgpu Vulkan, Zero DirectML/CPU)
+app.get('/api/splat/runs', (c) => {
+  return c.json({
+    runs: listSplatRuns(),
+    viewerAvailable: fs.existsSync(DATA_PATHS.gaussianSplatViewerHtml),
+    trainScriptAvailable: fs.existsSync(DATA_PATHS.gaussianSplatTrainScript),
+  });
+});
+
+app.post('/api/splat/encode', async (c) => {
+  try {
+    const body = (await c.req.json()) as SplatEncodeRequest;
+    const run = await runGaussianSplatEncode(body);
+    return c.json({ run, runs: listSplatRuns() });
+  } catch (err) {
+    return c.json({ error: err instanceof Error ? err.message : String(err) }, 400);
+  }
+});
+
+app.get('/api/splat/viewer', (c) => {
+  if (!fs.existsSync(DATA_PATHS.gaussianSplatViewerHtml)) {
+    return c.text('viewer_25d.html not found', 404);
+  }
+  return c.html(fs.readFileSync(DATA_PATHS.gaussianSplatViewerHtml, 'utf-8'));
+});
+
+app.get('/api/splat/runs/:runId/:fileName', (c) => {
+  try {
+    const { runId, fileName } = c.req.param();
+    const { filePath, contentType } = resolveSplatArtifactFile(runId, fileName);
+    const buf = fs.readFileSync(filePath);
+    return new Response(buf, {
+      status: 200,
+      headers: { 'Content-Type': contentType },
+    });
+  } catch (err) {
+    return c.text(err instanceof Error ? err.message : 'Not found', 404);
   }
 });
 

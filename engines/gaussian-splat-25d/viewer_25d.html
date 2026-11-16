@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<title>Gradient Descent for a Face</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#f3efe6; --dim:#8d8a84; --faint:#4a4844; --gold:#e9c46a; }
+  html,body { margin:0; height:100%; background:#000; overflow:hidden; }
+  #stage { position:absolute; left:0; top:0; width:1920px; height:1080px; transform-origin:0 0; background:#000; color:var(--ink); font-family:Inter,sans-serif; }
+  #gl { position:absolute; inset:0; width:1920px; height:1080px; }
+  #photoBox { position:absolute; left:248px; top:110px; width:688px; height:860px; overflow:hidden; }
+  #photo { position:absolute; left:0; top:0; width:688px; height:860px; transform-origin:0 0; }
+  .lab { position:absolute; top:84px; font:500 12px/1 "IBM Plex Mono",monospace; letter-spacing:.22em; color:var(--dim); text-transform:uppercase; }
+  #labL { left:248px; } #labR { left:984px; }
+  #cap { position:absolute; left:0; right:0; top:26px; text-align:center; font:italic 400 34px/1.2 "Cormorant Garamond",serif; color:var(--ink); opacity:0; }
+  .col { position:absolute; top:110px; width:176px; }
+  #colL { left:40px; } #colR { left:1704px; }
+  .k { font:500 11px/1 "IBM Plex Mono",monospace; letter-spacing:.22em; color:var(--dim); text-transform:uppercase; }
+  #epoch { font:600 30px/1 Inter,sans-serif; letter-spacing:.14em; margin-top:10px; }
+  #stageName { font:500 12px/1.5 "IBM Plex Mono",monospace; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-top:14px; min-height:36px; }
+  .stat { margin-top:44px; } .stat .v { font:500 30px/1 "IBM Plex Mono",monospace; margin-top:12px; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .bar { margin-bottom:40px; } .bar .row { display:flex; justify-content:space-between; }
+  .bar .pct { font:500 11px/1 "IBM Plex Mono",monospace; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .bar .track { height:3px; background:#1d1c1a; margin-top:12px; } .bar .fill { height:3px; width:0; background:var(--ink); }
+  #curve { position:absolute; left:248px; top:990px; width:1424px; height:66px; }
+  #curveLab { position:absolute; left:40px; top:1016px; }
+  #title { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; }
+  #title h1 { font:400 104px/1 "Cormorant Garamond",serif; letter-spacing:.2em; margin:0 0 0 .2em; }
+  #title h2 { font:italic 400 44px/1 "Cormorant Garamond",serif; color:var(--gold); margin:22px 0 46px; }
+  #title p { font:400 19px/1.7 Inter,sans-serif; color:#cfcbc2; margin:0; text-align:center; }
+  #title p.s { font-size:14px; color:var(--dim); margin-top:10px; }
+  #ctl { position:fixed; left:0; right:0; bottom:0; padding:8px 14px; display:flex; gap:12px; align-items:center; background:#111c; color:#bbb; font:12px "IBM Plex Mono",monospace; z-index:9; }
+  #ctl input { flex:1; } #ctl button { background:#222; color:#ddd; border:1px solid #444; padding:4px 12px; font:inherit; cursor:pointer; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <div id="photoBox"><img id="photo" src="reference/target-crop.jpg" alt=""></div>
+  <div class="lab" id="labL">Reference · the real photo</div>
+  <div class="lab" id="labR">Code · gradient descent</div>
+  <div id="cap"></div>
+  <div class="col" id="colL">
+    <div class="k">Gradient descent</div>
+    <div id="epoch">EPOCH 0</div>
+    <div id="stageName">Everything is random</div>
+    <div class="stat"><div class="k">Step</div><div class="v" id="vStep">0</div></div>
+    <div class="stat"><div class="k">Loss</div><div class="v" id="vLoss">0.0000</div></div>
+    <div class="stat"><div class="k">Blobs</div><div class="v" id="vN">0</div></div>
+  </div>
+  <div class="col" id="colR"></div>
+  <div class="k" id="curveLab">Loss</div>
+  <canvas id="curve" width="1424" height="66"></canvas>
+  <div id="title">
+    <h1>GRADIENT DESCENT</h1><h2>for a face</h2>
+    <p id="credit"></p><p class="s">Every frame replays a real recorded training run. Depth is estimated from the single photo.</p>
+  </div>
+</div>
+<div id="ctl"><button id="play">pause</button><input id="scrub" type="range" min="0" max="71.5" step="0.01" value="0"><span id="tt">0.0s</span></div>
+<script>
+const qs = new URLSearchParams(location.search);
+const EXPORT = qs.has('export');
+const DUR = 71.5, T_TRAIN0 = 4, T_TRAIN1 = 42, T_ZOOM = 46, T_REV = 53, T_TITLE = 65.5;
+const FOCUS = [0.404, 0.372];
+const $ = id => document.getElementById(id);
+const stage = $('stage');
+function fit(){ const s = EXPORT ? 1 : Math.min(innerWidth/1920, (innerHeight-34)/1080); stage.style.transform = `scale(${s})`; stage.style.left = EXPORT ? '0' : ((innerWidth-1920*s)/2)+'px'; }
+addEventListener('resize', fit); fit();
+if (qs.has('dbg')){ const [dx, dy, ds] = qs.get('dbg').split(',').map(Number); removeEventListener('resize', fit); stage.style.left = '0'; stage.style.transform = `scale(${ds}) translate(${-dx}px, ${-dy}px)`; $('ctl').style.display = 'none'; }
+if (EXPORT) $('ctl').style.display = 'none';
+const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
+const sstep = (a,b,x) => { const t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
+const lerp = (a,b,t) => a+(b-a)*t;
+
+const BARS = [['light','Light'],['shape','Shape'],['sobel_edge','Sobel Edge'],['laplacian_detail','Laplacian'],['detail','Detail']];
+$('colR').innerHTML = BARS.map(([k,l]) => `<div class="bar"><div class="row"><span class="k">${l}</span><span class="pct" id="p_${k}">0%</span></div><div class="track"><div class="fill" id="f_${k}"></div></div></div>`).join('');
+
+const EPOCHS = [
+  [0, 'STAGE 0', 'Random Gaussian Init'], [4, 'STAGE 1', 'Coarse Light & Structure'], [14, 'STAGE 2', 'Mid-Frequency Shapes'],
+  [24, 'STAGE 3', 'Sobel Edge Alignment'], [34, 'STAGE 4', 'Laplacian High-Freq Detail'], [42, 'STAGE 5', 'Converged'],
+  [53, '2.5D PARALLAX', 'Depth Anything V2 · Camera Orbit']];
+const CAPS = [[0.8, 4.2, 'Universal 2D/2.5D Gaussian Splatting.'], [5.5, 11.5, 'Error-map weighted sampling & Sobel/Laplacian gradients.'],
+  [25, 31.5, 'Every step refines high-error regions on the GPU.'], [42.4, 45.8, 'Which one is the photo?'], [46.3, 48.6, 'Zoom in.'], [48.9, 52.6, 'BLOBS'], [54, 59.6, '2.5D Depth Parallax & Text-Behind-Subject.']];
+
+let NIDX = 0, depthTex = null, depthImg = null, dmeta = {aspect: 0.8, tex_width: 640, tex_height: 800}; let meta, bin, depth = null, gl, prog, rprog, vao, bufA, bufB, bufZ, fbo, accTex, curPair = -1, NMAX, arrA, arrB;
+
+const VS = `#version 300 es
+precision highp float;
+layout(location=0) in vec2 aQ;
+layout(location=1) in vec2 aPosA; layout(location=2) in vec2 aLsA; layout(location=3) in float aRotA; layout(location=4) in vec3 aColA; layout(location=5) in float aAmpA;
+layout(location=6) in vec2 aPosB; layout(location=7) in vec2 aLsB; layout(location=8) in float aRotB; layout(location=9) in vec3 aColB; layout(location=10) in float aAmpB;
+uniform float uMix, uLsMin, uLsMax, uAmpMax, uZs, uShr, uAspect; uniform vec2 uZf, uZo;
+out vec2 vQ; out vec3 vCol; out float vW;
+void main(){
+  vec2 p = mix(aPosA, aPosB, uMix)*1.5 - 0.25;
+  vec2 sg = exp(mix(aLsA, aLsB, uMix)*(uLsMax-uLsMin) + uLsMin) * uShr;
+  float ra = aRotA*3.14159265, rb = aRotB*3.14159265, d = rb-ra;
+  if (d > 1.5707963) d -= 3.14159265; if (d < -1.5707963) d += 3.14159265;
+  float r = ra + d*uMix; float c = cos(r), s = sin(r);
+  vec2 ip = p + 3.0*(aQ.x*vec2(c, s)*sg.x + aQ.y*vec2(-s, c)*sg.y)*vec2(1.0, uAspect);
+  ip = (ip - uZf)*uZs + uZo;
+  gl_Position = vec4(ip.x*2.0 - 1.0, 1.0 - ip.y*2.0, 0., 1.);
+  vQ = aQ; vCol = mix(aColA, aColB, uMix); vW = uAmpMax*mix(aAmpA, aAmpB, uMix);
+}`;
+const FS = `#version 300 es
+precision highp float; in vec2 vQ; in vec3 vCol; in float vW; uniform float uHard; out vec4 o;
+void main(){ float r = length(vQ); float w = vW*mix(exp(-4.5*r*r), 1.0 - smoothstep(0.50, 0.56, r), uHard); o = vec4(vCol*w, w); }`;
+// pass 2: universal 2.5D depth-displaced mesh (clean foreground/background parallax)
+const RVS = `#version 300 es
+precision highp float;
+layout(location=0) in vec2 aUV;
+uniform sampler2D uDepthTex; uniform float uDepth, uYaw, uPitch, uH, uBreath, uAspect; uniform vec2 uCenter;
+out vec2 vUV; out vec3 vN;
+void main(){
+  vec4 dt = textureLod(uDepthTex, aUV, 0.0); float z = dt.r;
+  vec3 w = vec3((aUV.x-0.5)*uAspect, 0.5-aUV.y, (z-0.5)*0.45*uDepth) * uBreath;
+  float cy = cos(uYaw), sy = sin(uYaw), cp = cos(uPitch), sp = sin(uPitch);
+  vec3 v = vec3(w.x*cy + w.z*sy, w.y, -w.x*sy + w.z*cy);
+  v = vec3(v.x, v.y*cp - v.z*sp, v.y*sp + v.z*cp);
+  float D = 3.2; float persp = mix(1.0, D/(D - v.z), min(uDepth*4.0, 1.0));
+  vec2 px = uCenter + vec2(v.x, -v.y)*persp*uH;
+  gl_Position = vec4(px.x/960.0 - 1.0, 1.0 - px.y/540.0, -v.z*0.8, 1.);
+  vUV = aUV; vN = vec3(cy, sy, cp);
+}`;
+const RFS = `#version 300 es
+precision highp float; uniform sampler2D uAcc, uDepthTex; uniform float uReveal, uDim, uLightA, uGloss, uH, uAspect; in vec2 vUV; out vec4 o;
+void main(){
+  vec2 jx = dFdx(vUV)*vec2(uAspect, 1.0), jy = dFdy(vUV)*vec2(uAspect, 1.0);
+  float area = abs(jx.x*jy.y - jx.y*jy.x)*uH*uH;
+  if (uReveal > 0.5 && area < 0.25) discard;
+  vec4 a = texture(uAcc, vec2(vUV.x, 1.0 - vUV.y));
+  vec3 col = a.rgb/(a.a + 1e-5); float cov = 1.0 - exp(-a.a);
+  vec3 img = mix(vec3(1.0), col, cov);
+  float m = smoothstep(0.25, 0.75, texture(uDepthTex, vUV).g);
+  vec2 e = vec2(4.0/640.0, 4.0/640.0);
+  float zx = texture(uDepthTex, vUV + vec2(e.x, 0.)).r - texture(uDepthTex, vUV - vec2(e.x, 0.)).r;
+  float zy = texture(uDepthTex, vUV + vec2(0., e.y)).r - texture(uDepthTex, vUV - vec2(0., e.y)).r;
+  vec3 n = normalize(vec3(-zx*0.45/(2.0*e.x*max(uAspect, 0.2)), zy*0.45/(2.0*e.y), 1.0));
+  vec3 L = normalize(vec3(sin(uLightA)*1.1, 0.35, 0.75));
+  float dl = max(dot(n, L), 0.0);
+  float lit = 0.82 + 0.36*dl*dl + 0.08*pow(dl, 20.0);
+  img *= mix(1.0, lit, uReveal*uGloss);
+  float alpha = mix(1.0, m, uReveal);
+  if (alpha < 0.01) discard;
+  o = vec4(img*alpha*uDim, 1.0);
+}`;
+function sh(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+function mk(vs, fs){ const p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); if(!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; }
+
+const TW = 1056, TH = 1320; let vaoM, NM = 0;
+function initGL(){
+  gl = $('gl').getContext('webgl2', {antialias:true, preserveDrawingBuffer:true, alpha:false, depth:true});
+  gl.getExtension('EXT_color_buffer_float'); gl.getExtension('EXT_color_buffer_half_float'); gl.getExtension('EXT_float_blend');
+  prog = mk(VS, FS); rprog = mk(RVS, RFS);
+  vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+  const q = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, q); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  const rec = (buf, base) => { gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, NMAX*12, gl.DYNAMIC_DRAW);
+    const A = (loc, n, type, off) => { gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, n, type, true, 12, off); gl.vertexAttribDivisor(loc, 1); };
+    A(base, 2, gl.UNSIGNED_SHORT, 0); A(base+1, 2, gl.UNSIGNED_BYTE, 4); A(base+2, 1, gl.UNSIGNED_BYTE, 6); A(base+3, 3, gl.UNSIGNED_BYTE, 7); A(base+4, 1, gl.UNSIGNED_BYTE, 10); };
+  bufA = gl.createBuffer(); rec(bufA, 1); bufB = gl.createBuffer(); rec(bufB, 6);
+  // displaced mesh
+  vaoM = gl.createVertexArray(); gl.bindVertexArray(vaoM);
+  const GX = 320, GY = 400, mv = new Float32Array((GX+1)*(GY+1)*2), mi = new Uint32Array(GX*GY*6);
+  for (let j = 0, k = 0; j <= GY; j++) for (let i = 0; i <= GX; i++){ mv[k++] = i/GX; mv[k++] = j/GY; }
+  for (let j = 0, k = 0; j < GY; j++) for (let i = 0; i < GX; i++){ const a = j*(GX+1)+i; mi[k++]=a; mi[k++]=a+1; mi[k++]=a+GX+1; mi[k++]=a+1; mi[k++]=a+GX+2; mi[k++]=a+GX+1; }
+  NM = mi.length;
+  const mb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, mb); gl.bufferData(gl.ARRAY_BUFFER, mv, gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  const eb = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, eb); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mi, gl.STATIC_DRAW);
+  gl.bindVertexArray(null);
+  accTex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, accTex); gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA16F, TW, TH);
+  for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v);
+  fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, accTex, 0);
+  if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) throw new Error('float framebuffer not supported');
+  depthTex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, depthTex);
+  const dtw = dmeta.tex_width || 640, dth = dmeta.tex_height || 800;
+  if (depthImg) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, dtw, dth, 0, gl.RGBA, gl.FLOAT, depthImg); else gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, 1, 1, 0, gl.RGBA, gl.FLOAT, new Float32Array([0.6, 1, 0.3, 1]));
+  for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v);
+  arrA = new Uint8Array(NMAX*12); arrB = new Uint8Array(NMAX*12);
+}
+function setPair(i){
+  if (i === curPair) return; curPair = i;
+  const S = meta.snaps, a = S[i], b = S[Math.min(i+1, S.length-1)];
+  arrB.set(bin.subarray(b.off, b.off + b.n*12));
+  arrA.set(bin.subarray(a.off, a.off + a.n*12));
+  for (let k = a.n; k < b.n; k++){ const o = k*12; arrA.set(arrB.subarray(o, o+12), o); arrA[o+10] = 0; }   // not born yet
+  gl.bindBuffer(gl.ARRAY_BUFFER, bufA); gl.bufferSubData(gl.ARRAY_BUFFER, 0, arrA, 0, b.n*12);
+  gl.bindBuffer(gl.ARRAY_BUFFER, bufB); gl.bufferSubData(gl.ARRAY_BUFFER, 0, arrB, 0, b.n*12);
+}
+function stepAt(t){ const u = clamp((t - T_TRAIN0)/(T_TRAIN1 - T_TRAIN0), 0, 1); return meta.steps*Math.pow(u, 2.3); }
+function locate(step){ const S = meta.snaps; let lo = 0, hi = S.length-1;
+  while (hi - lo > 1){ const m = (lo+hi)>>1; if (S[m].step <= step) lo = m; else hi = m; }
+  const a = S[lo], b = S[hi]; return [lo, b.step > a.step ? clamp((step - a.step)/(b.step - a.step), 0, 1) : 0]; }
+const U = n => gl.getUniformLocation(prog, n);
+
+function drawCurve(t){
+  const c = $('curve'), x = c.getContext('2d'); x.clearRect(0,0,c.width,c.height);
+  const S = meta.snaps, l0 = Math.log(S[0].loss), l1 = Math.log(S[S.length-1].loss*0.9);
+  const Y = l => 6 + (1 - (Math.log(l)-l1)/(l0-l1))*54;
+  x.strokeStyle = '#1d1c1a'; x.lineWidth = 1; x.beginPath(); x.moveTo(0,61.5); x.lineTo(c.width,61.5); x.stroke();
+  const tEnd = clamp(t, T_TRAIN0, T_TRAIN1); let lx = 0, ly = Y(S[0].loss);
+  x.strokeStyle = '#e9c46a'; x.lineWidth = 2; x.lineJoin = 'round'; x.beginPath(); x.moveTo(0, ly);
+  for (let tt = T_TRAIN0; tt <= tEnd; tt += 0.05){ const [i,m] = locate(stepAt(tt)); const l = lerp(S[i].loss, S[Math.min(i+1,S.length-1)].loss, m);
+    lx = (tt - T_TRAIN0)/(T_TRAIN1 - T_TRAIN0)*c.width*0.9; ly = Y(l); x.lineTo(lx, ly); }
+  if (t > T_TRAIN1){ lx = Math.min(c.width, c.width*0.9 + (t - T_TRAIN1)/(DUR - T_TRAIN1)*c.width*0.1); x.lineTo(lx, ly); }
+  x.stroke(); x.fillStyle = '#fff'; x.beginPath(); x.arc(lx, ly, 3, 0, 7); x.fill();
+}
+
+function frame(t){
+  t = clamp(t, 0, DUR);
+  const S = meta.snaps, step = stepAt(t), [i, m] = locate(step); setPair(i);
+  const a = S[i], b = S[Math.min(i+1, S.length-1)];
+  const zk = sstep(T_ZOOM, T_ZOOM + 2.2, t)*(1 - sstep(T_REV - 1.8, T_REV - 0.3, t)), zs = 1 + 6.5*zk;
+  const proof = sstep(T_ZOOM + 2.6, T_ZOOM + 3.6, t)*(1 - sstep(T_REV - 2.6, T_REV - 1.9, t));
+  const rev = sstep(T_REV, T_REV + 2.6, t), ti = sstep(T_TITLE, T_TITLE + 1.6, t);
+  const oo = clamp((t - (T_REV + 1))/6.5, 0, 1), orbit = oo*oo*(3 - 2*oo);
+  const yaw = rev * (qs.has('yaw') ? +qs.get('yaw') : 0.46*Math.sin(orbit*Math.PI*2));
+  const T_FRONT = T_REV + 7.6, front = sstep(T_FRONT, T_FRONT + 5, t);
+  const pitch = rev * 0.05*Math.sin(orbit*Math.PI*2);
+  const aspect = meta.aspect || dmeta.aspect || 0.8;
+  const H = lerp(860, 1010 + 70*Math.sin(orbit*Math.PI) + 120*front, rev);
+  const cx = lerp(984 + 344, 960, rev), cyy = lerp(110 + 430, 548, rev);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.viewport(0,0,TW,TH); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.useProgram(prog); gl.bindVertexArray(vao); gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
+  gl.uniform1f(U('uMix'), m); gl.uniform1f(U('uLsMin'), meta.ls_min); gl.uniform1f(U('uLsMax'), meta.ls_max); gl.uniform1f(U('uAmpMax'), meta.amp_max);
+  gl.uniform1f(U('uZs'), zs); gl.uniform1f(U('uShr'), lerp(1, 0.62, proof)); gl.uniform1f(U('uHard'), proof); gl.uniform1f(U('uAspect'), aspect);
+  gl.uniform2f(U('uZf'), FOCUS[0], FOCUS[1]); gl.uniform2f(U('uZo'), lerp(FOCUS[0], 0.5, zk), lerp(FOCUS[1], 0.5, zk));
+  gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, b.n);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0,0,1920,1080); gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.disable(gl.BLEND); gl.enable(gl.DEPTH_TEST); gl.useProgram(rprog); gl.bindVertexArray(vaoM);
+  const R = n => gl.getUniformLocation(rprog, n);
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, accTex); gl.uniform1i(R('uAcc'), 0);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, depthTex); gl.uniform1i(R('uDepthTex'), 1); gl.activeTexture(gl.TEXTURE0);
+  gl.uniform1f(R('uDepth'), rev); gl.uniform1f(R('uYaw'), yaw); gl.uniform1f(R('uPitch'), pitch); gl.uniform1f(R('uH'), H); gl.uniform1f(R('uAspect'), aspect);
+  gl.uniform1f(R('uBreath'), 1 + rev*0.004*Math.sin(t*1.3)); gl.uniform2f(R('uCenter'), cx, cyy);
+  const gl0 = T_REV + 2.3; gl.uniform1f(R('uGloss'), sstep(gl0, gl0 + 0.45, t)*(1 - sstep(gl0 + 0.85, gl0 + 1.4, t)));
+  gl.uniform1f(R('uLightA'), lerp(-1.1, 1.1, clamp((t - gl0)/1.4, 0, 1))); gl.uniform1f(R('uReveal'), rev); gl.uniform1f(R('uDim'), 1 - 0.8*ti);
+  gl.drawElements(gl.TRIANGLES, NM, gl.UNSIGNED_INT, 0);
+
+  // HUD: every number comes from the recorded run
+  let ep = EPOCHS[0]; for (const e of EPOCHS) if (t >= e[0]) ep = e;
+  $('epoch').textContent = ep[1]; $('stageName').textContent = ep[2];
+  $('vStep').textContent = Math.round(step); $('vLoss').textContent = lerp(a.loss, b.loss, m).toFixed(4);
+  $('vN').textContent = Math.round(lerp(a.n, b.n, m)).toLocaleString('en-US');
+  const E = S[S.length-1];
+  for (const [k] of BARS){ const v = clamp((S[0][k] - lerp(a[k], b[k], m))/(S[0][k] - E[k]), 0, 1); $('f_'+k).style.width = (v*100)+'%'; $('p_'+k).textContent = Math.round(v*100)+'%'; }
+  let co = 0, ct = ''; for (const [t0, t1, txt] of CAPS){ const o = sstep(t0, t0+0.8, t)*(1 - sstep(t1-0.7, t1, t)); if (o > co){ co = o; ct = txt; } }
+  if (ct === 'BLOBS') ct = `The right one is ${meta.n_final.toLocaleString('en-US')} blobs of colour. Nothing else.`;
+  $('cap').textContent = ct; $('cap').style.opacity = co*(1-ti);
+  const hide = sstep(42.2, 42.8, t)*(1 - sstep(44.4, 45, t));
+  const side = (1 - rev)*(1 - ti);
+  $('photoBox').style.opacity = 1 - rev;
+  $('photo').style.transform = `translate(${(lerp(FOCUS[0],0.5,zk) - FOCUS[0]*zs)*688}px, ${(lerp(FOCUS[1],0.5,zk) - FOCUS[1]*zs)*860}px) scale(${zs})`;
+  $('labL').style.opacity = (1-hide)*side; $('labR').style.opacity = (1-hide)*side;
+  for (const id of ['colL','colR','curve','curveLab']) $(id).style.opacity = (1 - 0.75*rev)*(1 - ti);
+  $('title').style.opacity = ti;
+  drawCurve(t);
+}
+
+let playing = !qs.has('t'), tNow = +qs.get('t') || +qs.get('from') || 0, last = null;   // ?from=54 starts playing at 54 s (used to export one section)
+function loop(now){
+  if (playing){ if (last !== null) tNow += (now - last)/1000; if (tNow >= DUR){ tNow = EXPORT ? DUR : 0; } }
+  last = now; if (tNow !== window.__drawn){ frame(tNow); window.__drawn = tNow; }   // paused = no GPU work, leaves the GPU to training
+  if (!EXPORT){ $('scrub').value = tNow; $('tt').textContent = tNow.toFixed(1)+'s'; }
+  requestAnimationFrame(loop);
+}
+$('scrub').oninput = e => { tNow = +e.target.value; };
+window.__seek = t => { playing = false; tNow = t; frame(t); window.__drawn = t; };
+$('play').onclick = () => { playing = !playing; $('play').textContent = playing ? 'pause' : 'play'; };
+if (!playing) $('play').textContent = 'play';
+
+(async () => {
+  const RUN = qs.get('run') || 'train_v2';   // train.py writes meta.json at the end; live_meta.py writes the same file for a run that stopped early
+  const mr = await fetch(`${RUN}/${qs.get('meta') || 'meta.json'}`, {cache:'no-store'});
+  if (!mr.ok) { document.body.innerHTML = '<p style="color:#ccc;font:16px monospace;padding:40px">No recorded run found in ' + RUN + '/. Run train_v2/train.py, or train_v2/live_meta.py for a run that stopped early.</p>'; return; }
+  meta = await mr.json();
+  bin = new Uint8Array(await (await fetch(`${RUN}/snapshots.bin`, {cache:'no-store'})).arrayBuffer());
+  try { const r = await fetch('train/depth.bin'); if (r.ok) depth = new Uint8Array(await r.arrayBuffer()); } catch(e){}
+  try { const r = await fetch('train/depth-meta.json'); if (r.ok) dmeta = await r.json(); } catch(e){}
+  try { const r = await fetch('train/depth-tex.f32'); if (r.ok) depthImg = new Float32Array(await r.arrayBuffer()); } catch(e){}
+  NMAX = meta.n_final;
+  $('credit').textContent = `${meta.n_final.toLocaleString('en-US')} blobs · ${meta.steps.toLocaleString('en-US')} steps · learned and rendered in code by Claude`;
+  initGL(); await document.fonts.ready; window.__ready = true; requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

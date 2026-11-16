@@ -7,4 +7,6 @@ backups/mcp_snapshots/
 backups/meeting_audio/
 backups/*.json
 backups/*.jsonl
+backups/*.db
 !backups/.gitkeep
+

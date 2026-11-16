@@ -60,10 +60,29 @@ When `~/.gemini/config/skills` and plugin folders (`SuperAntigravityTJTO`, `scie
 * **Left Stage**: Interactive bar visualization and data table.
 * **Right Sources Pane**: Displays the verified file path, inferred schema, deterministic transformation steps, and a live SQL editor guarded by `assertReadOnlySelectSql()` (only single-statement `SELECT` and `WITH` queries are allowed).
 
-### Stage 04: Post-Meeting Vulkan GPU Executor
-* Upload meeting audio (`.wav`, `.mp3`, `.m4a`) to transcribe locally via `tools/gpu_asr.py` (`ggml_vulkan` GPU hardware acceleration) or paste meeting notes.
-* Extracts executive summary points, verified decisions, and staged MCP actions (`claude-mem`, `sqlite`).
-* **Mandatory Human Approval Gate**: staged MCP calls stay locked in `PENDING_HUMAN_APPROVAL` until you explicitly click **Approve & Trigger MCP**.
+### Stage 04: Knowledge Hub & GPU Meeting/Media Vault
+* Ingests **Instagram Reels**, **YouTube URLs**, or local audio/video files.
+* Executes `watch_video.py --gpu auto --ocr-dml --transcribe` + `gpu_asr.py` (`ggml_vulkan` acceleration on AMD RX 6600, NVIDIA or Intel Arc).
+* Extracts word-level transcriptions, key video OCR visual text highlights, and discovers cross-knowledge semantic connections (edges linking Reels, YouTube guides, and team meetings sharing concepts).
+* **Mandatory Human Approval Gate**: staged MCP actions stay locked in `PENDING_HUMAN_APPROVAL` until you explicitly click **Approve & Trigger MCP**.
+
+### Stage 05: 2.5D Gaussian Splat Studio & Antigravity Motion
+* High-performance dual-backend 2.5D Gaussian Splat generator powered by `engines/gaussian-splat-25d/train.py`.
+* GPU-accelerated depth estimation & splat rasterization using **ROCm gfx1032** (via native AMD PyTorch) or **Vulkan wgpu** with automatic hardware detection (CPU/DirectML execution is strictly banned to prevent system lag).
+* Live WebGL2 viewer with orbital controls and direct export to **Remotion** Z-sandwich video templates (`remotion_gaussian_splat_25d.tsx`).
+
+---
+
+## Ecosystem Supercharge: Kitsune Router (Multi-LLM & Anti-429)
+
+This dashboard connects natively with **[Kitsune Router](https://github.com/santanaluiz181-cell/kitsune-router)**, an ultra-fast local MCP bridge & prompt dispatcher:
+
+* **Zero-Cost Multi-Account Pooling**: Rotates multiple Google AI Studio keys, Google OAuth sessions, NVIDIA Nemotron, and local Ollama models.
+* **Intelligent 429 Failover**: Automatically switches providers if one hits a rate limit or runs out of free quota.
+* **PrivacyGuard**: Keeps sensitive judicial or enterprise code 100% on local offline models (`ollama/qwen2.5-coder:14b`), while routing public web research and heavy coding to `gemini-3.8-pro`, `claude-sonnet-4-5`, or `deepseek-r1`.
+* **Live Compact Pill HUD**: Floating real-time telemetry badge (`http://127.0.0.1:4319/?mode=pill`) that displays mascot animations, routing status, and token savings.
+
+👉 **Get Kitsune Router**: Clone and launch the official repository at **[https://github.com/santanaluiz181-cell/kitsune-router](https://github.com/santanaluiz181-cell/kitsune-router)**.
 
 ---
 

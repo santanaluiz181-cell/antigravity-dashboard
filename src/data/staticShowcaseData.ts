@@ -850,3 +850,233 @@ export function extractMeetingClientSide(title: string, transcriptText: string):
     stagedActions: staged,
   };
 }
+
+export interface VaultNodeDto {
+  id: string;
+  sourceType: 'reel' | 'youtube' | 'meeting' | 'local_video';
+  title: string;
+  sourceUrl: string;
+  createdAt: string;
+  transcript: string;
+  ocrHighlights: { timestamp: string; text: string }[];
+  hooks: string[];
+  entities: string[];
+  topics: string[];
+  gpuPipeline: string;
+}
+
+export interface VaultEdgeDto {
+  id: string;
+  sourceId: string;
+  targetId: string;
+  sharedTopics: string[];
+  similarity: number;
+  reason: string;
+}
+
+export interface VaultActionDto {
+  actionId: string;
+  nodeId: string;
+  mcpServer: string;
+  toolName: string;
+  summary: string;
+  payload: Record<string, unknown>;
+  status: 'PENDING_HUMAN_APPROVAL' | 'APPROVED_AND_EXECUTED' | 'REJECTED';
+  executedAt?: string;
+  executionReceipt?: string;
+}
+
+export interface VaultSnapshotDto {
+  nodes: VaultNodeDto[];
+  edges: VaultEdgeDto[];
+  actions: VaultActionDto[];
+  dbPath: string;
+}
+
+export const FALLBACK_VAULT_SNAPSHOT: VaultSnapshotDto = {
+  dbPath: 'backups/knowledge_vault.db',
+  nodes: [
+    {
+      id: 'node_reel_25d_parallax',
+      sourceType: 'reel',
+      title: 'Instagram Reel: 2.5D Gaussian Splat Parallax Hook',
+      sourceUrl: 'https://www.instagram.com/reel/antigravity-25d-demo/',
+      createdAt: new Date(Date.now() - 7200_000).toISOString(),
+      transcript:
+        'Hook nos primeiros 2 segundos: separe o sujeito em Z=25, coloque a tipografia atrás em Z=15 e use Gaussian Splat no fundo em Z=5 com Vulkan ou ROCm na RX 6600.',
+      ocrHighlights: [
+        { timestamp: '00:02', text: 'Z-Sandwich: Z=5 BG | Z=15 Title | Z=25 Subject' },
+        { timestamp: '00:09', text: 'ROCm gfx1032: 8.44ms/step (Zero DirectML)' },
+      ],
+      hooks: ['Separe o sujeito em Z=25 e coloque a tipografia em Z=15 para paralaxe 2.5D imediata.'],
+      entities: ['Gaussian', 'Vulkan', 'ROCm', 'RX 6600', 'DirectML'],
+      topics: ['gaussian-splat', '2.5d-parallax', 'rocm-gfx1032', 'wgpu-vulkan', 'rx-6600'],
+      gpuPipeline: 'watch_video.py --gpu auto --ocr-dml --transcribe',
+    },
+    {
+      id: 'node_yt_bloat_graphify',
+      sourceType: 'youtube',
+      title: 'YouTube Deep Dive: Eliminating Context Bloat with Graphify AST & SQLite',
+      sourceUrl: 'https://www.youtube.com/watch?v=antigravity-context-ast',
+      createdAt: new Date(Date.now() - 3600_000).toISOString(),
+      transcript:
+        'Skills duplicadas e regras acima de 250 linhas expulsam subagentes. Use Graphify AST e SQLite Read-Only com aprovação humana para conectar conhecimento de Reels e reuniões no claude-mem.',
+      ocrHighlights: [
+        { timestamp: '01:14', text: 'Cartographer PROJECT_MAP.md: -98.5% Tokens' },
+        { timestamp: '03:40', text: 'PENDING_HUMAN_APPROVAL -> @claude-mem' },
+      ],
+      hooks: ['Skills duplicadas expulsam subagentes; Graphify AST reduz 98.5% dos tokens de descoberta.'],
+      entities: ['Graphify', 'SQLite', 'Antigravity', 'claude-mem', 'Reels'],
+      topics: ['context-bloat', 'graphify-ast', 'sqlite', 'claude-mem', 'human-approval-gate'],
+      gpuPipeline: 'watch_video.py --gpu auto --ocr-dml --transcribe',
+    },
+    {
+      id: 'node_mtg_rx6600_architecture',
+      sourceType: 'meeting',
+      title: 'Meeting: Unified RX 6600 GPU + Knowledge Vault Sync',
+      sourceUrl: 'local://meetings/rx6600-unified-sync',
+      createdAt: new Date(Date.now() - 1200_000).toISOString(),
+      transcript:
+        'Decidimos banir DirectML no Gaussian Splat e rodar apenas wgpu Vulkan ou ROCm gfx1032 na RX 6600, integrando transcrições de Reels e YouTube no SQLite com aprovação humana antes do MCP.',
+      ocrHighlights: [
+        { timestamp: '00:18', text: 'assertNeverTouchesOfficialBinaries() -> agy.exe locked' },
+      ],
+      hooks: ['Banir DirectML e consolidar Reels + YouTube + Reuniões no SQLite knowledge_vault.db.'],
+      entities: ['RX 6600', 'DirectML', 'Vulkan', 'ROCm', 'SQLite', 'Reels', 'YouTube', 'MCP'],
+      topics: ['gaussian-splat', 'rocm-gfx1032', 'wgpu-vulkan', 'rx-6600', 'sqlite', 'human-approval-gate', 'directml-ban'],
+      gpuPipeline: 'gpu_asr.py (ggml_vulkan)',
+    },
+  ],
+  edges: [
+    {
+      id: 'edge_reel_mtg',
+      sourceId: 'node_reel_25d_parallax',
+      targetId: 'node_mtg_rx6600_architecture',
+      sharedTopics: ['gaussian-splat', 'rocm-gfx1032', 'wgpu-vulkan', 'rx-6600'],
+      similarity: 0.44,
+      reason: 'REEL <-> MEETING share: gaussian-splat, rocm-gfx1032, wgpu-vulkan, rx-6600',
+    },
+    {
+      id: 'edge_yt_mtg',
+      sourceId: 'node_yt_bloat_graphify',
+      targetId: 'node_mtg_rx6600_architecture',
+      sharedTopics: ['sqlite', 'human-approval-gate'],
+      similarity: 0.25,
+      reason: 'YOUTUBE <-> MEETING share: sqlite, human-approval-gate',
+    },
+  ],
+  actions: [
+    {
+      actionId: 'node_reel_25d_parallax_act_mem',
+      nodeId: 'node_reel_25d_parallax',
+      mcpServer: 'claude-mem',
+      toolName: 'save_memory',
+      summary: 'Index "Instagram Reel: 2.5D Gaussian Splat Parallax Hook" in @claude-mem',
+      payload: {
+        project: 'antigravity-dashboard',
+        title: '[Knowledge Vault] 2.5D Gaussian Splat Parallax Hook',
+        topics: ['gaussian-splat', '2.5d-parallax', 'rocm-gfx1032', 'wgpu-vulkan'],
+      },
+      status: 'PENDING_HUMAN_APPROVAL',
+    },
+  ],
+};
+
+export function ingestVideoClientSide(
+  current: VaultSnapshotDto,
+  urlOrPath: string,
+  title?: string,
+  notesFallback?: string
+): VaultSnapshotDto {
+  const lower = urlOrPath.toLowerCase();
+  const sourceType: VaultNodeDto['sourceType'] = lower.includes('instagram.com') || lower.includes('reel')
+    ? 'reel'
+    : lower.includes('youtube.com') || lower.includes('youtu.be')
+    ? 'youtube'
+    : 'local_video';
+
+  const id = `node_${sourceType}_${Date.now()}`;
+  const text = (notesFallback || `Analyzed ${sourceType} (${urlOrPath}) for RX 6600 Vulkan/ROCm, gaussian-splat, and sqlite knowledge graph.`).trim();
+  const domainTopics = ['gaussian-splat', '2.5d-parallax', 'rocm-gfx1032', 'wgpu-vulkan', 'rx-6600', 'sqlite', 'claude-mem', 'graphify-ast', 'context-bloat', 'human-approval-gate'];
+  const topics = domainTopics.filter((t) => text.toLowerCase().includes(t.split('-')[0]));
+  if (topics.length === 0) topics.push('gaussian-splat', 'sqlite');
+
+  const newNode: VaultNodeDto = {
+    id,
+    sourceType,
+    title: title?.trim() || `${sourceType.toUpperCase()}: ${urlOrPath.slice(0, 48)}`,
+    sourceUrl: urlOrPath,
+    createdAt: new Date().toISOString(),
+    transcript: text,
+    ocrHighlights: [{ timestamp: '00:02', text: `OCR Extracted: ${urlOrPath.slice(0, 48)}` }],
+    hooks: [text.split(/[.!?]/)[0] || text.slice(0, 90)],
+    entities: ['RX 6600', 'Vulkan', 'SQLite'],
+    topics,
+    gpuPipeline: 'watch_video.py --gpu auto --ocr-dml --transcribe (Browser Mode)',
+  };
+
+  const newEdges: VaultEdgeDto[] = [];
+  for (const existing of current.nodes) {
+    const shared = topics.filter((t) => existing.topics.includes(t));
+    if (shared.length > 0) {
+      newEdges.push({
+        id: `edge_${id}_${existing.id}`,
+        sourceId: id,
+        targetId: existing.id,
+        sharedTopics: shared,
+        similarity: Number((shared.length / Math.max(1, new Set([...topics, ...existing.topics]).size)).toFixed(2)),
+        reason: `${sourceType.toUpperCase()} <-> ${existing.sourceType.toUpperCase()} share: ${shared.join(', ')}`,
+      });
+    }
+  }
+
+  const newAction: VaultActionDto = {
+    actionId: `${id}_act_mem`,
+    nodeId: id,
+    mcpServer: 'claude-mem',
+    toolName: 'save_memory',
+    summary: `Index "${newNode.title}" (${sourceType}) topics [${topics.slice(0, 3).join(', ')}] in @claude-mem`,
+    payload: { project: 'antigravity-dashboard', title: newNode.title, topics },
+    status: 'PENDING_HUMAN_APPROVAL',
+  };
+
+  return {
+    ...current,
+    nodes: [newNode, ...current.nodes],
+    edges: [...newEdges, ...current.edges],
+    actions: [newAction, ...current.actions],
+  };
+}
+
+export interface SplatRunDto {
+  runId: string;
+  createdAt: string;
+  backendRequested: 'auto' | 'rocm' | 'wgpu';
+  pythonInterpreter: string;
+  aspect: string;
+  nmax: number;
+  hasMorphB: boolean;
+  artifacts: string[];
+  meta?: Record<string, unknown>;
+}
+
+export const FALLBACK_SPLAT_RUNS: SplatRunDto[] = [
+  {
+    runId: 'splat_rx6600_reference',
+    createdAt: new Date().toISOString(),
+    backendRequested: 'rocm',
+    pythonInterpreter: 'E:\\Downloads_C\\VoiceStudio\\.venv\\Scripts\\python.exe',
+    aspect: '16:9',
+    nmax: 1600,
+    hasMorphB: true,
+    artifacts: ['blobs.json', 'blobs.svg', 'snapshots.bin', 'depth-tex.f32', 'meta.json', 'morph_ab.json'],
+    meta: {
+      backend: 'rocm',
+      device: 'AMD Radeon RX 6600 (gfx1032)',
+      n_final: 1600,
+      psnr: 29.4,
+      train_seconds: 8.45,
+      aspect: 1.7778,
+    },
+  },
+];
