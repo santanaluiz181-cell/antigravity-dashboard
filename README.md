@@ -6,6 +6,8 @@
 
 **[English](./README.md) | [简体中文](./docs/README.zh-CN.md) | [Português](./docs/README.pt-BR.md)**
 
+**[Live Interactive GitHub Pages Showcase → https://santanaluiz181-cell.github.io/antigravity-dashboard/](https://santanaluiz181-cell.github.io/antigravity-dashboard/)**
+
 Build live local dashboards, quarantine context bloat, inspect read-only SQLite sources, and gate GPU-transcribed meeting actions inside the official `antigravity.google` design system.
 
 <br />

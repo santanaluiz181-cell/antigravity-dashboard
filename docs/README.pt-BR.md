@@ -6,6 +6,8 @@
 
 **[English](../README.md) | [简体中文](./README.zh-CN.md) | [Português](./README.pt-BR.md)**
 
+**[Página Interativa no GitHub Pages → https://santanaluiz181-cell.github.io/antigravity-dashboard/](https://santanaluiz181-cell.github.io/antigravity-dashboard/)**
+
 Construa dashboards locais vivos, isole o bloat de contexto, inspecione fontes SQLite Read-Only e aprove ações de reunião transcritas via GPU dentro do sistema visual oficial do `antigravity.google`.
 
 <br />

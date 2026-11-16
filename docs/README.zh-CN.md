@@ -6,6 +6,8 @@
 
 **[English](../README.md) | [简体中文](./README.zh-CN.md) | [Português](./README.pt-BR.md)**
 
+**[在线交互式 GitHub Pages 演示 → https://santanaluiz181-cell.github.io/antigravity-dashboard/](https://santanaluiz181-cell.github.io/antigravity-dashboard/)**
+
 基于 `antigravity.google` 官方视觉体系构建的本地独立工作台：用于构建实时交互式看板、隔离重复 Skill 与上下文膨胀、审查只读 SQLite 数据溯源，以及通过 Vulkan GPU 语音转写执行会后人工审批。
 
 <br />

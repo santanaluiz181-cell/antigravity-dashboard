@@ -1,14 +1,21 @@
 {
   "schema": "graphify-ponytail/v1",
-  "generatedAt": "2026-11-16T01:50:35.186Z",
+  "generatedAt": "2026-11-16T02:05:35.888Z",
   "root": "E:/Downloads_C/Antigravity Dashboard",
   "stats": {
-    "totalFilesIndexed": 25,
-    "totalEdges": 51
+    "totalFilesIndexed": 27,
+    "totalEdges": 56
   },
   "ponytailNavigation": {
     "directive": "Use view_file with StartLine/EndLine around symbol.line instead of reading full files.",
     "topHubs": [
+      {
+        "file": "src/data/staticShowcaseData.ts",
+        "inDegree": 2,
+        "outDegree": 1,
+        "symbolCount": 7,
+        "lines": 853
+      },
       {
         "file": "server/services/tokenScanner.ts",
         "inDegree": 0,
@@ -31,6 +38,13 @@
         "lines": 320
       },
       {
+        "file": "src/App.tsx",
+        "inDegree": 1,
+        "outDegree": 6,
+        "symbolCount": 8,
+        "lines": 884
+      },
+      {
         "file": "server/paths.ts",
         "inDegree": 0,
         "outDegree": 2,
@@ -38,18 +52,11 @@
         "lines": 70
       },
       {
-        "file": "src/App.tsx",
-        "inDegree": 1,
-        "outDegree": 5,
-        "symbolCount": 7,
-        "lines": 361
-      },
-      {
         "file": "README.md",
         "inDegree": 0,
         "outDegree": 0,
         "symbolCount": 9,
-        "lines": 121
+        "lines": 123
       },
       {
         "file": "server/services/meetingPipeline.ts",
@@ -63,7 +70,7 @@
         "inDegree": 0,
         "outDegree": 0,
         "symbolCount": 8,
-        "lines": 84
+        "lines": 86
       },
       {
         "file": "server/services/transcriptReader.ts",
@@ -73,13 +80,6 @@
         "lines": 288
       },
       {
-        "file": "organizer.md",
-        "inDegree": 0,
-        "outDegree": 0,
-        "symbolCount": 6,
-        "lines": 29
-      },
-      {
         "file": "src/components/AntigravityLogo.tsx",
         "inDegree": 2,
         "outDegree": 1,
@@ -87,43 +87,43 @@
         "lines": 13
       },
       {
+        "file": "src/components/Module4PostMeetingMvp.tsx",
+        "inDegree": 1,
+        "outDegree": 2,
+        "symbolCount": 3,
+        "lines": 404
+      },
+      {
+        "file": "src/components/TopTelemetryBar.tsx",
+        "inDegree": 1,
+        "outDegree": 2,
+        "symbolCount": 3,
+        "lines": 181
+      },
+      {
+        "file": "src/components/AntigravityMotionPlayer.tsx",
+        "inDegree": 1,
+        "outDegree": 1,
+        "symbolCount": 2,
+        "lines": 335
+      },
+      {
         "file": "src/components/AntigravityParticlesCanvas.tsx",
         "inDegree": 1,
         "outDegree": 1,
         "symbolCount": 2,
         "lines": 247
-      },
-      {
-        "file": "src/components/BottomCommandBar.tsx",
-        "inDegree": 1,
-        "outDegree": 1,
-        "symbolCount": 2,
-        "lines": 141
-      },
-      {
-        "file": "src/components/Module1BloatCenter.tsx",
-        "inDegree": 0,
-        "outDegree": 1,
-        "symbolCount": 4,
-        "lines": 420
-      },
-      {
-        "file": "src/components/Module2LiveSessions.tsx",
-        "inDegree": 0,
-        "outDegree": 1,
-        "symbolCount": 4,
-        "lines": 312
       }
     ]
   },
   "nodes": {
     "organizer.md": {
-      "lines": 29,
-      "sha8": "81111b57",
+      "lines": 16,
+      "sha8": "8287856a",
       "symbols": [
         {
           "kind": "heading",
-          "name": "Auto-Organizer Checkpoint — Antigravity Dashboard",
+          "name": "Auto-Organizer Checkpoint: Antigravity Dashboards & Motion S",
           "line": 1
         },
         {
@@ -133,29 +133,19 @@
         },
         {
           "kind": "heading",
-          "name": "2. Arquivos Criados / Modificados",
+          "name": "2. Arquivos Principais",
           "line": 6
         },
         {
           "kind": "heading",
-          "name": "3. Decisões Arquiteturais Fixadas",
-          "line": 18
-        },
-        {
-          "kind": "heading",
-          "name": "4. Estado Atual",
-          "line": 23
-        },
-        {
-          "kind": "heading",
-          "name": "5. Próximo Passo Imediato",
-          "line": 27
+          "name": "3. URLs Verificadas",
+          "line": 12
         }
       ]
     },
     "PROJECT_MAP.md": {
-      "lines": 50,
-      "sha8": "305c00f9",
+      "lines": 56,
+      "sha8": "390a2902",
       "symbols": [
         {
           "kind": "heading",
@@ -165,8 +155,8 @@
       ]
     },
     "README.md": {
-      "lines": 121,
-      "sha8": "835d227e",
+      "lines": 123,
+      "sha8": "c3c5962a",
       "symbols": [
         {
           "kind": "heading",
@@ -176,48 +166,48 @@
         {
           "kind": "heading",
           "name": "Built as Code, Grounded in Local Sources",
-          "line": 19
+          "line": 21
         },
         {
           "kind": "heading",
           "name": "Visual System Extracted via `/REA` from `antigravity.google`",
-          "line": 29
+          "line": 31
         },
         {
           "kind": "heading",
           "name": "Four Interactive Stages",
-          "line": 42
+          "line": 44
         },
         {
           "kind": "heading",
           "name": "Repository Structure",
-          "line": 68
+          "line": 70
         },
         {
           "kind": "heading",
           "name": "Quickstart",
-          "line": 105
+          "line": 107
         },
         {
           "kind": "heading",
           "name": "1. Install dependencies",
-          "line": 110
+          "line": 112
         },
         {
           "kind": "heading",
           "name": "2. Run Vitest security & mutation suite",
-          "line": 113
+          "line": 115
         },
         {
           "kind": "heading",
           "name": "3. Start Backend API (:4320) + Frontend Studio (:5175)",
-          "line": 116
+          "line": 118
         }
       ]
     },
     "vite.config.ts": {
-      "lines": 18,
-      "sha8": "3295e5c6",
+      "lines": 19,
+      "sha8": "5d035e6e",
       "symbols": []
     },
     "vitest.config.ts": {
@@ -237,43 +227,48 @@
       ]
     },
     "src/App.tsx": {
-      "lines": 361,
-      "sha8": "e450af15",
+      "lines": 884,
+      "sha8": "e49c5b5d",
       "symbols": [
         {
           "kind": "type",
           "name": "BloatScanReportDto",
-          "line": 8
-        },
-        {
-          "kind": "type",
-          "name": "ProfilePresetDto",
           "line": 9
         },
         {
           "kind": "type",
-          "name": "KitsuneStatusDto",
-          "line": 13
+          "name": "ProfilePresetDto",
+          "line": 10
         },
         {
           "kind": "type",
-          "name": "SessionSummaryDto",
+          "name": "KitsuneStatusDto",
           "line": 14
         },
         {
           "kind": "type",
-          "name": "DataSourceQueryResultDto",
-          "line": 18
+          "name": "SessionSummaryDto",
+          "line": 15
         },
         {
           "kind": "type",
-          "name": "DatasetMetaDto",
+          "name": "DataSourceQueryResultDto",
           "line": 19
         },
         {
           "kind": "type",
+          "name": "DatasetMetaDto",
+          "line": 20
+        },
+        {
+          "kind": "type",
           "name": "MeetingSessionDto",
-          "line": 23
+          "line": 24
+        },
+        {
+          "kind": "type",
+          "name": "QuarantineLedgerEntryDto",
+          "line": 35
         }
       ]
     },
@@ -282,10 +277,67 @@
       "sha8": "4981ad1a",
       "symbols": []
     },
+    "src/data/staticShowcaseData.ts": {
+      "lines": 853,
+      "sha8": "f29fb65f",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "QuarantineLedgerEntryDto",
+          "line": 18
+        },
+        {
+          "kind": "fn",
+          "name": "computeReportFromItems",
+          "line": 350
+        },
+        {
+          "kind": "fn",
+          "name": "simulatePresetClientSide",
+          "line": 443
+        },
+        {
+          "kind": "fn",
+          "name": "buildColumnsFromRows",
+          "line": 598
+        },
+        {
+          "kind": "fn",
+          "name": "runClientSideSqlSimulation",
+          "line": 629
+        },
+        {
+          "kind": "fn",
+          "name": "ingestClientSideFile",
+          "line": 702
+        },
+        {
+          "kind": "fn",
+          "name": "extractMeetingClientSide",
+          "line": 816
+        }
+      ]
+    },
     "src/components/AntigravityLogo.tsx": {
       "lines": 13,
-      "sha8": "5b9eeb0d",
+      "sha8": "f9ddd398",
       "symbols": []
+    },
+    "src/components/AntigravityMotionPlayer.tsx": {
+      "lines": 335,
+      "sha8": "3d0e78ec",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "MotionScene",
+          "line": 3
+        },
+        {
+          "kind": "export",
+          "name": "antigravityExplainerConfig",
+          "line": 120
+        }
+      ]
     },
     "src/components/AntigravityParticlesCanvas.tsx": {
       "lines": 247,
@@ -320,8 +372,8 @@
       ]
     },
     "src/components/Module1BloatCenter.tsx": {
-      "lines": 420,
-      "sha8": "fb58748d",
+      "lines": 425,
+      "sha8": "dc79e3e7",
       "symbols": [
         {
           "kind": "type",
@@ -346,86 +398,96 @@
       ]
     },
     "src/components/Module2LiveSessions.tsx": {
-      "lines": 312,
-      "sha8": "a0397c1b",
+      "lines": 333,
+      "sha8": "85cd83c0",
       "symbols": [
         {
           "kind": "type",
           "name": "SessionSummaryDto",
-          "line": 12
-        },
-        {
-          "kind": "type",
-          "name": "TranscriptStepDto",
-          "line": 24
-        },
-        {
-          "kind": "type",
-          "name": "KitsuneStatusDto",
-          "line": 35
-        },
-        {
-          "kind": "type",
-          "name": "Module2Props",
-          "line": 49
-        }
-      ]
-    },
-    "src/components/Module3DataSourcesPane.tsx": {
-      "lines": 430,
-      "sha8": "989438c6",
-      "symbols": [
-        {
-          "kind": "type",
-          "name": "ColumnSchemaDto",
-          "line": 12
-        },
-        {
-          "kind": "type",
-          "name": "DataSourceQueryResultDto",
-          "line": 18
-        },
-        {
-          "kind": "type",
-          "name": "DatasetMetaDto",
-          "line": 33
-        },
-        {
-          "kind": "type",
-          "name": "Module3Props",
-          "line": 41
-        }
-      ]
-    },
-    "src/components/Module4PostMeetingMvp.tsx": {
-      "lines": 350,
-      "sha8": "01850f93",
-      "symbols": [
-        {
-          "kind": "type",
-          "name": "StagedMcpActionDto",
           "line": 13
         },
         {
           "kind": "type",
+          "name": "TranscriptStepDto",
+          "line": 25
+        },
+        {
+          "kind": "type",
+          "name": "KitsuneStatusDto",
+          "line": 36
+        },
+        {
+          "kind": "type",
+          "name": "Module2Props",
+          "line": 50
+        }
+      ]
+    },
+    "src/components/Module3DataSourcesPane.tsx": {
+      "lines": 502,
+      "sha8": "b0a8abad",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ColumnSchemaDto",
+          "line": 17
+        },
+        {
+          "kind": "type",
+          "name": "DataSourceQueryResultDto",
+          "line": 23
+        },
+        {
+          "kind": "type",
+          "name": "DatasetMetaDto",
+          "line": 38
+        },
+        {
+          "kind": "type",
+          "name": "Module3Props",
+          "line": 46
+        }
+      ]
+    },
+    "src/components/Module4PostMeetingMvp.tsx": {
+      "lines": 404,
+      "sha8": "f69ee2dd",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "StagedMcpActionDto",
+          "line": 14
+        },
+        {
+          "kind": "type",
           "name": "MeetingSessionDto",
-          "line": 26
+          "line": 27
         },
         {
           "kind": "type",
           "name": "Module4Props",
-          "line": 38
+          "line": 39
         }
       ]
     },
     "src/components/TopTelemetryBar.tsx": {
-      "lines": 165,
-      "sha8": "465cdc89",
+      "lines": 181,
+      "sha8": "784b5c3f",
       "symbols": [
         {
           "kind": "type",
-          "name": "TopTelemetryBarProps",
+          "name": "UiLang",
           "line": 4
+        },
+        {
+          "kind": "type",
+          "name": "ViewMode",
+          "line": 5
+        },
+        {
+          "kind": "type",
+          "name": "TopTelemetryBarProps",
+          "line": 7
         }
       ]
     },
@@ -797,8 +859,8 @@
       ]
     },
     "docs/README.pt-BR.md": {
-      "lines": 46,
-      "sha8": "a1a7246e",
+      "lines": 48,
+      "sha8": "3481ae1d",
       "symbols": [
         {
           "kind": "heading",
@@ -808,23 +870,23 @@
         {
           "kind": "heading",
           "name": "Construído em Código, Ancorado em Fontes Reais",
-          "line": 19
+          "line": 21
         },
         {
           "kind": "heading",
           "name": "Sistema Visual Extraído via `/REA` de `antigravity.google`",
-          "line": 29
+          "line": 31
         },
         {
           "kind": "heading",
           "name": "Execução Rápida",
-          "line": 37
+          "line": 39
         }
       ]
     },
     "docs/README.zh-CN.md": {
-      "lines": 84,
-      "sha8": "4f83134f",
+      "lines": 86,
+      "sha8": "1aedbf80",
       "symbols": [
         {
           "kind": "heading",
@@ -834,37 +896,37 @@
         {
           "kind": "heading",
           "name": "代码即演示，数据可溯源 (Built as Code, Grounded in Local Sources)",
-          "line": 19
+          "line": 21
         },
         {
           "kind": "heading",
           "name": "通过 `/REA` 从 `antigravity.google` 提取的真实视觉系统",
-          "line": 29
+          "line": 31
         },
         {
           "kind": "heading",
           "name": "四大交互式舞台 (Four Interactive Stages)",
-          "line": 42
+          "line": 44
         },
         {
           "kind": "heading",
           "name": "快速开始 (Quickstart)",
-          "line": 68
+          "line": 70
         },
         {
           "kind": "heading",
           "name": "1. 安装依赖包",
-          "line": 73
+          "line": 75
         },
         {
           "kind": "heading",
           "name": "2. 运行 Vitest 安全与变异测试套件 (6/6 通过)",
-          "line": 76
+          "line": 78
         },
         {
           "kind": "heading",
           "name": "3. 启动后端 API (:4320) 与前端工作台 (:5175)",
-          "line": 79
+          "line": 81
         }
       ]
     }
@@ -915,6 +977,10 @@
       "to": "./components/AntigravityLogo"
     },
     {
+      "from": "src/App.tsx",
+      "to": "./components/AntigravityMotionPlayer"
+    },
+    {
       "from": "src/main.tsx",
       "to": "react"
     },
@@ -927,7 +993,15 @@
       "to": "./App"
     },
     {
+      "from": "src/data/staticShowcaseData.ts",
+      "to": "../components/Module4PostMeetingMvp"
+    },
+    {
       "from": "src/components/AntigravityLogo.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/AntigravityMotionPlayer.tsx",
       "to": "react"
     },
     {
@@ -947,12 +1021,20 @@
       "to": "react"
     },
     {
+      "from": "src/components/Module2LiveSessions.tsx",
+      "to": "../data/staticShowcaseData"
+    },
+    {
       "from": "src/components/Module3DataSourcesPane.tsx",
       "to": "react"
     },
     {
       "from": "src/components/Module4PostMeetingMvp.tsx",
       "to": "react"
+    },
+    {
+      "from": "src/components/Module4PostMeetingMvp.tsx",
+      "to": "../data/staticShowcaseData"
     },
     {
       "from": "src/components/TopTelemetryBar.tsx",
