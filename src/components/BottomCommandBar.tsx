@@ -1,13 +1,4 @@
 import React from 'react';
-import {
-  Layers,
-  Activity,
-  Database,
-  Mic,
-  Search,
-  Sparkles,
-  RotateCcw,
-} from 'lucide-react';
 
 export type ActiveTabId = 'bloat' | 'sessions' | 'datasources' | 'meetings';
 
@@ -30,60 +21,54 @@ export const BottomCommandBar: React.FC<BottomCommandBarProps> = ({
   onQuickApplyPreset,
   isApplyingPreset,
 }) => {
-  const navItems: { id: ActiveTabId; label: string; badge?: string; icon: React.ReactNode }[] = [
+  const navItems: { id: ActiveTabId; label: string; symbol: string }[] = [
     {
       id: 'bloat',
-      label: '1. Context & Bloat Control',
-      badge: 'SKILLS / MCP',
-      icon: <Layers className="w-4 h-4" />,
+      label: '01. Context & Bloat',
+      symbol: 'tune',
     },
     {
       id: 'sessions',
-      label: '2. Live Sessions & Kitsune',
-      badge: 'BRAIN / :4319',
-      icon: <Activity className="w-4 h-4" />,
+      label: '02. Brain & Billion-Context',
+      symbol: 'hub',
     },
     {
       id: 'datasources',
-      label: '3. Data + Sources Pane',
-      badge: 'SQL / CSV',
-      icon: <Database className="w-4 h-4" />,
+      label: '03. Dashboards & Sources',
+      symbol: 'database',
     },
     {
       id: 'meetings',
-      label: '4. Post-Meeting Executor',
-      badge: 'VULKAN ASR',
-      icon: <Mic className="w-4 h-4" />,
+      label: '04. Meeting Executor',
+      symbol: 'graphic_eq',
     },
   ];
 
   return (
     <nav
-      aria-label="Bottom Command and Filter Bar"
-      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-[96%] max-w-[1380px] bg-[#13161B]/95 backdrop-blur-xl border border-[#232832] rounded-2xl px-3.5 py-2 shadow-2xl"
+      aria-label="Workspace Module and Filter Dock"
+      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-[96%] max-w-[1380px] bg-[var(--agy-surface)]/95 backdrop-blur-xl border border-[var(--agy-border)] rounded-full px-3.5 py-2 shadow-2xl"
     >
       <div className="flex flex-wrap items-center justify-between gap-2.5">
-        {/* Module Switcher Pills (Material 3 Bottom Bar Alignment) */}
-        <div className="flex items-center gap-1.5 overflow-x-auto">
+        {/* Module Switcher Pills (Antigravity Slider Control Style) */}
+        <div className="flex items-center gap-1 overflow-x-auto bg-[var(--agy-canvas)] p-1 rounded-full border border-[var(--agy-border)]">
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => onSelectTab(item.id)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   isActive
-                    ? 'bg-[#1F2531] text-[#E6EAF0] border border-[#384254]'
-                    : 'text-[#9BA3B0] hover:text-[#E6EAF0] hover:bg-[#181C23] border border-transparent'
+                    ? 'bg-[#3279f9] text-white'
+                    : 'text-[var(--agy-text-secondary)] hover:text-[var(--agy-text-primary)]'
                 }`}
               >
-                <span className={isActive ? 'text-[#8AB4F8]' : 'text-[#9BA3B0]'}>{item.icon}</span>
+                <span className="google-symbol !text-[16px]" aria-hidden="true">
+                  {item.symbol}
+                </span>
                 <span className="whitespace-nowrap">{item.label}</span>
-                {item.badge && (
-                  <span className="hidden xl:inline text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#0B0D10] text-[#646D7A]">
-                    {item.badge}
-                  </span>
-                )}
               </button>
             );
           })}
@@ -91,18 +76,28 @@ export const BottomCommandBar: React.FC<BottomCommandBarProps> = ({
 
         {/* Center Command / Filter Input */}
         <div className="relative flex-1 min-w-[200px] max-w-[340px]">
-          <Search className="w-3.5 h-3.5 text-[#646D7A] absolute left-3 top-1/2 -translate-y-1/2" />
+          <span
+            className="google-symbol !text-[16px] text-[var(--agy-text-muted)] absolute left-3 top-1/2 -translate-y-1/2"
+            aria-hidden="true"
+          >
+            search
+          </span>
+          <label htmlFor="global-command-filter" className="sr-only">
+            Filter skills, MCP servers, transcripts, or SQL tables
+          </label>
           <input
+            id="global-command-filter"
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Filter skills, MCPs, transcripts, or SQL tables..."
-            className="w-full bg-[#0B0D10] border border-[#232832] focus:border-[#8AB4F8] rounded-xl pl-8 pr-8 py-1.5 text-xs text-[#E6EAF0] placeholder-[#646D7A] outline-none transition-colors"
+            placeholder="Filter skills, MCPs, transcripts, or SQL..."
+            className="w-full bg-[var(--agy-canvas)] border border-[var(--agy-border)] focus:border-[#3279f9] rounded-full pl-9 pr-10 py-1.5 text-xs font-mono text-[var(--agy-text-primary)] placeholder-[var(--agy-text-muted)] outline-none transition-colors"
           />
           {searchQuery && (
             <button
+              type="button"
               onClick={() => onSearchChange('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-[#9BA3B0] hover:text-[#E6EAF0] cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-[var(--agy-text-secondary)] hover:text-[var(--agy-text-primary)]"
             >
               ESC
             </button>
@@ -112,26 +107,30 @@ export const BottomCommandBar: React.FC<BottomCommandBarProps> = ({
         {/* Right 1-Click Quick Profile Switcher */}
         <div className="hidden md:flex items-center gap-1.5">
           <button
+            type="button"
             onClick={() => onQuickApplyPreset('coding-lean')}
             disabled={isApplyingPreset}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-mono border cursor-pointer transition-colors ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono border transition-colors ${
               activePresetId === 'coding-lean'
-                ? 'bg-[#8AB4F8]/15 border-[#8AB4F8]/50 text-[#8AB4F8]'
-                : 'bg-[#0B0D10] border-[#232832] text-[#9BA3B0] hover:text-[#E6EAF0]'
+                ? 'bg-[#3279f9]/15 border-[#3279f9] text-[var(--agy-accent)]'
+                : 'bg-[var(--agy-canvas)] border-[var(--agy-border)] text-[var(--agy-text-secondary)] hover:text-[var(--agy-text-primary)]'
             }`}
-            title="1-Click: Quarantine duplicate skills & Science bloat so evicted subagents fit in budget"
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <span className="google-symbol !text-[15px]" aria-hidden="true">
+              bolt
+            </span>
             Coding Lean
           </button>
 
           <button
+            type="button"
             onClick={() => onQuickApplyPreset('full-restore')}
             disabled={isApplyingPreset}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-mono bg-[#0B0D10] border border-[#232832] text-[#9BA3B0] hover:text-[#E6EAF0] cursor-pointer"
-            title="Restore all quarantined skills and MCP servers from atomic backup"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-mono bg-[var(--agy-canvas)] border border-[var(--agy-border)] text-[var(--agy-text-secondary)] hover:text-[var(--agy-text-primary)]"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <span className="google-symbol !text-[15px]" aria-hidden="true">
+              restore
+            </span>
             Restore
           </button>
         </div>

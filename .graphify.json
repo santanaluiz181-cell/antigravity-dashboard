@@ -1,10 +1,10 @@
 {
   "schema": "graphify-ponytail/v1",
-  "generatedAt": "2026-11-15T23:39:59.781Z",
+  "generatedAt": "2026-11-16T01:50:35.186Z",
   "root": "E:/Downloads_C/Antigravity Dashboard",
   "stats": {
-    "totalFilesIndexed": 20,
-    "totalEdges": 48
+    "totalFilesIndexed": 25,
+    "totalEdges": 51
   },
   "ponytailNavigation": {
     "directive": "Use view_file with StartLine/EndLine around symbol.line instead of reading full files.",
@@ -40,9 +40,16 @@
       {
         "file": "src/App.tsx",
         "inDegree": 1,
-        "outDegree": 3,
+        "outDegree": 5,
         "symbolCount": 7,
-        "lines": 202
+        "lines": 361
+      },
+      {
+        "file": "README.md",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbolCount": 9,
+        "lines": 121
       },
       {
         "file": "server/services/meetingPipeline.ts",
@@ -52,11 +59,18 @@
         "lines": 214
       },
       {
+        "file": "docs/README.zh-CN.md",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbolCount": 8,
+        "lines": 84
+      },
+      {
         "file": "server/services/transcriptReader.ts",
         "inDegree": 0,
         "outDegree": 3,
         "symbolCount": 7,
-        "lines": 239
+        "lines": 288
       },
       {
         "file": "organizer.md",
@@ -66,11 +80,25 @@
         "lines": 29
       },
       {
+        "file": "src/components/AntigravityLogo.tsx",
+        "inDegree": 2,
+        "outDegree": 1,
+        "symbolCount": 0,
+        "lines": 13
+      },
+      {
+        "file": "src/components/AntigravityParticlesCanvas.tsx",
+        "inDegree": 1,
+        "outDegree": 1,
+        "symbolCount": 2,
+        "lines": 247
+      },
+      {
         "file": "src/components/BottomCommandBar.tsx",
         "inDegree": 1,
         "outDegree": 1,
         "symbolCount": 2,
-        "lines": 142
+        "lines": 141
       },
       {
         "file": "src/components/Module1BloatCenter.tsx",
@@ -84,35 +112,7 @@
         "inDegree": 0,
         "outDegree": 1,
         "symbolCount": 4,
-        "lines": 289
-      },
-      {
-        "file": "src/components/Module3DataSourcesPane.tsx",
-        "inDegree": 0,
-        "outDegree": 1,
-        "symbolCount": 4,
-        "lines": 430
-      },
-      {
-        "file": "src/components/TopTelemetryBar.tsx",
-        "inDegree": 1,
-        "outDegree": 2,
-        "symbolCount": 1,
-        "lines": 148
-      },
-      {
-        "file": "src/components/AntigravityLogo.tsx",
-        "inDegree": 1,
-        "outDegree": 1,
-        "symbolCount": 0,
-        "lines": 26
-      },
-      {
-        "file": "src/components/Module4PostMeetingMvp.tsx",
-        "inDegree": 0,
-        "outDegree": 1,
-        "symbolCount": 3,
-        "lines": 350
+        "lines": 312
       }
     ]
   },
@@ -153,6 +153,68 @@
         }
       ]
     },
+    "PROJECT_MAP.md": {
+      "lines": 50,
+      "sha8": "305c00f9",
+      "symbols": [
+        {
+          "kind": "heading",
+          "name": "CARTOGRAPHER — MAPA ARQUITETURAL DA CODEBASE (AST)",
+          "line": 1
+        }
+      ]
+    },
+    "README.md": {
+      "lines": 121,
+      "sha8": "835d227e",
+      "symbols": [
+        {
+          "kind": "heading",
+          "name": "Google Antigravity: Dashboards, Context & Motion Studio",
+          "line": 5
+        },
+        {
+          "kind": "heading",
+          "name": "Built as Code, Grounded in Local Sources",
+          "line": 19
+        },
+        {
+          "kind": "heading",
+          "name": "Visual System Extracted via `/REA` from `antigravity.google`",
+          "line": 29
+        },
+        {
+          "kind": "heading",
+          "name": "Four Interactive Stages",
+          "line": 42
+        },
+        {
+          "kind": "heading",
+          "name": "Repository Structure",
+          "line": 68
+        },
+        {
+          "kind": "heading",
+          "name": "Quickstart",
+          "line": 105
+        },
+        {
+          "kind": "heading",
+          "name": "1. Install dependencies",
+          "line": 110
+        },
+        {
+          "kind": "heading",
+          "name": "2. Run Vitest security & mutation suite",
+          "line": 113
+        },
+        {
+          "kind": "heading",
+          "name": "3. Start Backend API (:4320) + Frontend Studio (:5175)",
+          "line": 116
+        }
+      ]
+    },
     "vite.config.ts": {
       "lines": 18,
       "sha8": "3295e5c6",
@@ -175,43 +237,43 @@
       ]
     },
     "src/App.tsx": {
-      "lines": 202,
-      "sha8": "0ecdeb0d",
+      "lines": 361,
+      "sha8": "e450af15",
       "symbols": [
         {
           "kind": "type",
           "name": "BloatScanReportDto",
-          "line": 6
+          "line": 8
         },
         {
           "kind": "type",
           "name": "ProfilePresetDto",
-          "line": 7
+          "line": 9
         },
         {
           "kind": "type",
           "name": "KitsuneStatusDto",
-          "line": 11
+          "line": 13
         },
         {
           "kind": "type",
           "name": "SessionSummaryDto",
-          "line": 12
+          "line": 14
         },
         {
           "kind": "type",
           "name": "DataSourceQueryResultDto",
-          "line": 16
+          "line": 18
         },
         {
           "kind": "type",
           "name": "DatasetMetaDto",
-          "line": 17
+          "line": 19
         },
         {
           "kind": "type",
           "name": "MeetingSessionDto",
-          "line": 21
+          "line": 23
         }
       ]
     },
@@ -221,23 +283,39 @@
       "symbols": []
     },
     "src/components/AntigravityLogo.tsx": {
-      "lines": 26,
-      "sha8": "e27e57d5",
+      "lines": 13,
+      "sha8": "5b9eeb0d",
       "symbols": []
     },
+    "src/components/AntigravityParticlesCanvas.tsx": {
+      "lines": 247,
+      "sha8": "4e38e211",
+      "symbols": [
+        {
+          "kind": "type",
+          "name": "ParticlePoint",
+          "line": 3
+        },
+        {
+          "kind": "type",
+          "name": "AntigravityParticlesCanvasProps",
+          "line": 16
+        }
+      ]
+    },
     "src/components/BottomCommandBar.tsx": {
-      "lines": 142,
-      "sha8": "ea50c759",
+      "lines": 141,
+      "sha8": "2b1e0eaa",
       "symbols": [
         {
           "kind": "type",
           "name": "ActiveTabId",
-          "line": 12
+          "line": 3
         },
         {
           "kind": "type",
           "name": "BottomCommandBarProps",
-          "line": 14
+          "line": 5
         }
       ]
     },
@@ -268,8 +346,8 @@
       ]
     },
     "src/components/Module2LiveSessions.tsx": {
-      "lines": 289,
-      "sha8": "eb67db18",
+      "lines": 312,
+      "sha8": "a0397c1b",
       "symbols": [
         {
           "kind": "type",
@@ -289,7 +367,7 @@
         {
           "kind": "type",
           "name": "Module2Props",
-          "line": 44
+          "line": 49
         }
       ]
     },
@@ -341,13 +419,13 @@
       ]
     },
     "src/components/TopTelemetryBar.tsx": {
-      "lines": 148,
-      "sha8": "f865e81a",
+      "lines": 165,
+      "sha8": "465cdc89",
       "symbols": [
         {
           "kind": "type",
           "name": "TopTelemetryBarProps",
-          "line": 12
+          "line": 4
         }
       ]
     },
@@ -678,8 +756,8 @@
       ]
     },
     "server/services/transcriptReader.ts": {
-      "lines": 239,
-      "sha8": "86f5eb8e",
+      "lines": 288,
+      "sha8": "e7b73194",
       "symbols": [
         {
           "kind": "type",
@@ -699,22 +777,94 @@
         {
           "kind": "fn",
           "name": "listBrainSessions",
-          "line": 38
+          "line": 43
         },
         {
           "kind": "fn",
           "name": "readSessionTranscriptSteps",
-          "line": 114
+          "line": 119
         },
         {
           "kind": "fn",
           "name": "listGlobalHtmlArtifacts",
-          "line": 167
+          "line": 172
         },
         {
           "kind": "fn",
           "name": "probeKitsuneAndNotch",
-          "line": 185
+          "line": 190
+        }
+      ]
+    },
+    "docs/README.pt-BR.md": {
+      "lines": 46,
+      "sha8": "a1a7246e",
+      "symbols": [
+        {
+          "kind": "heading",
+          "name": "Google Antigravity: Dashboards, Context & Motion Studio",
+          "line": 5
+        },
+        {
+          "kind": "heading",
+          "name": "Construído em Código, Ancorado em Fontes Reais",
+          "line": 19
+        },
+        {
+          "kind": "heading",
+          "name": "Sistema Visual Extraído via `/REA` de `antigravity.google`",
+          "line": 29
+        },
+        {
+          "kind": "heading",
+          "name": "Execução Rápida",
+          "line": 37
+        }
+      ]
+    },
+    "docs/README.zh-CN.md": {
+      "lines": 84,
+      "sha8": "4f83134f",
+      "symbols": [
+        {
+          "kind": "heading",
+          "name": "Google Antigravity：实时数据看板、上下文控制与动态演示工作台",
+          "line": 5
+        },
+        {
+          "kind": "heading",
+          "name": "代码即演示，数据可溯源 (Built as Code, Grounded in Local Sources)",
+          "line": 19
+        },
+        {
+          "kind": "heading",
+          "name": "通过 `/REA` 从 `antigravity.google` 提取的真实视觉系统",
+          "line": 29
+        },
+        {
+          "kind": "heading",
+          "name": "四大交互式舞台 (Four Interactive Stages)",
+          "line": 42
+        },
+        {
+          "kind": "heading",
+          "name": "快速开始 (Quickstart)",
+          "line": 68
+        },
+        {
+          "kind": "heading",
+          "name": "1. 安装依赖包",
+          "line": 73
+        },
+        {
+          "kind": "heading",
+          "name": "2. 运行 Vitest 安全与变异测试套件 (6/6 通过)",
+          "line": 76
+        },
+        {
+          "kind": "heading",
+          "name": "3. 启动后端 API (:4320) 与前端工作台 (:5175)",
+          "line": 79
         }
       ]
     }
@@ -757,6 +907,14 @@
       "to": "./components/BottomCommandBar"
     },
     {
+      "from": "src/App.tsx",
+      "to": "./components/AntigravityParticlesCanvas"
+    },
+    {
+      "from": "src/App.tsx",
+      "to": "./components/AntigravityLogo"
+    },
+    {
       "from": "src/main.tsx",
       "to": "react"
     },
@@ -770,6 +928,10 @@
     },
     {
       "from": "src/components/AntigravityLogo.tsx",
+      "to": "react"
+    },
+    {
+      "from": "src/components/AntigravityParticlesCanvas.tsx",
       "to": "react"
     },
     {
