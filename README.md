@@ -1,151 +1,89 @@
-<div align="center">
+# Antigravity Control & Data Studio
 
-<img src="./docs/assets/antigravity-hero.svg" alt="Google Antigravity — Control & Data Studio (Nov-2026 Onyx)" width="100%" />
+[English](./README.md) | [简体中文](./docs/README.zh-CN.md) | [Português](./docs/README.pt-BR.md)
 
-<br />
+Local workbench for inspecting Google Antigravity context budgets, skill and MCP server footprint, live session transcripts, read-only SQLite data lineage, and GPU-backed post-meeting action staging.
 
-# Google Antigravity — Control & Data Studio (`Onyx Nov-2026`)
-
-**Context & Token-Bloat Control Center · Live Brain & Kitsune Bridge · SQLite Sources Inspector · GPU Post-Meeting Executor**
-
-[![ToS Section 6 Safe](https://img.shields.io/badge/Google_Antigravity_ToS-Section_6_Safe_(Zero_Binary_Patch)-81C995?style=for-the-badge& labelColor=13161B)](#segurança-tos-section-6-zero-binary-patching)
-[![Stack](https://img.shields.io/badge/Stack-Node_v26_%7C_Hono_%7C_React_19_%7C_SQLite-8AB4F8?style=for-the-badge&labelColor=13161B)](#arquitetura--stack)
-[![Billion Context](https://img.shields.io/badge/Graphify_%2B_claude--mem--37777--98.3%25_Tokens-F29900?style=for-the-badge&labelColor=13161B)](#ecossistema-billion-context-claude-mem--graphify--cartographer)
-[![Vitest](https://img.shields.io/badge/Vitest_Suite-6%2F6_Passing_(Uncle_Bob_Gate)-81C995?style=for-the-badge&labelColor=13161B)](#testes--verificação-uncle-bob-gate)
-
-</div>
+Built as an external local web server (`Hono` on `:4320` + `Vite / React 19` on `:5175`). It never patches or modifies `~/.gemini/bin/agy.exe` or any `.asar` bundle (compliant with Google Antigravity Terms of Service, Section 6).
 
 ---
 
-## Visão Geral (O Que É e Por Que Existe)
+## Why This Exists
 
-O **Antigravity Dashboard** é uma estação web local standalone desenhada estritamente sob o **Design System Google Antigravity Nov-2026 (`Onyx #0B0D10 / #13161B / #232832` + Material Design 3 Dark + Google Sans / JetBrains Mono)**.
+When `~/.gemini/config/skills` and plugin folders (`SuperAntigravityTJTO`, `science`) accumulate duplicate skill definitions or 250+ line rule files, the system prompt index overflows its token budget. Once that ceiling is crossed, Antigravity silently drops core subagents (`browser`, `research`) and skills (`super-render`, `ultimate-research`) from the active session.
 
-Ele combina quatro fluxos críticos em uma única superfície local:
-1. **Context & Token-Bloat Control Center** *(inspirado em Claude Code Dashboards)*: Escaneia `~/.gemini/config/skills`, plugins (`SuperAntigravityTJTO`, `science`), `GEMINI.md`, `AGENTS.md` e `mcp_config.json`, detectando **skills duplicadas** e **prompts acima de 250 linhas** que estouram o orçamento de contexto e expulsam subagentes essenciais (`browser`, `research`, `super-render`, `ultimate-research`).
-2. **Live Sessions, Remote & Kitsune Bridge**: Stream em tempo real de `~/.gemini/antigravity/brain/<id>/.system_generated/logs/transcript.jsonl`, telemetria do **Kitsune Router (`:4319`)**, **claude-mem (`:37777`)**, **MJ Notch Companion (`:49211`)** e previewer sandbox para artefatos `/generative_ui`.
-3. **Interactive Data Dashboard + Sources Pane** *(inspirado em Anthropic Claude Dashboards)*: Ingestão drag-and-drop de `.csv`, `.json` e `.sqlite` via motor nativo `node:sqlite` (`DatabaseSync`) com gráfico interativo à esquerda e inspetor transparente de linhagem SQL Read-Only (`SELECT`/`WITH`) à direita.
-4. **Post-Meeting Executor MVP** *(alternativa limpa ao Claude Meetings sem bot WebRTC frágil)*: Recebe áudio ou notas de reunião, roteia para transcrição acelerada em GPU (`tools/gpu_asr.py` com `ggml_vulkan`), extrai Resumo Executivo, Decisões e Tarefas, e trava qualquer execução de ferramenta MCP atrás de um **Portão Obrigatório de Clique Humano (`PENDING_HUMAN_APPROVAL`)**.
+This studio measures that footprint directly from disk and lets you park redundant skills into SHA-256 verified quarantine folders in one click.
 
 ---
 
-## Arquitetura Visual & Fluxo de Dados
+## Core Modules
 
-<div align="center">
-  <img src="./docs/assets/architecture-overview.svg" alt="Billion-Context + Antigravity Onyx Architecture" width="100%" />
-</div>
+### 1. Context & Token-Bloat Control
+* Scans `~/.gemini/config/skills`, `~/.gemini/config/plugins/*/skills`, `~/.gemini/antigravity/builtin/skills`, `GEMINI.md`, `AGENTS.md`, and `mcp_config.json`.
+* Flags prompts exceeding `250 lines` and highlights exact duplicate skill collisions between global config and plugins.
+* Switches profiles (`Coding Lean`, `Frontend Craft`, `Journalism & TJTO`, `Video / B-Roll`, `Full Restore`) by creating a timestamped backup in `backups/` before moving duplicate folders or toggling MCP servers.
 
-```mermaid
-flowchart LR
-  subgraph WIN["Windows Local Sources (~/.gemini)"]
-    SK["config/skills + plugins/*/skills"]
-    RL["GEMINI.md + AGENTS.md"]
-    MCP["antigravity/mcp_config.json"]
-    BR["brain/<id>/transcript.jsonl"]
-    DB["conversation_summaries.db"]
-  end
+### 2. Live Brain Sessions, Kitsune & Context Engines
+* Streams step logs from `~/.gemini/antigravity/brain/<id>/.system_generated/logs/transcript.jsonl`.
+* Probes local ports for **Kitsune Router** (`127.0.0.1:4319`), **claude-mem** (`127.0.0.1:37777`), and **MJ Notch Companion** (`127.0.0.1:49211`).
+* Reads `.graphify.json` (`Graphify + PonyTail` AST index) and `PROJECT_MAP.md` (`Cartographer` structural map, reducing blind discovery token cost by 98.3%).
+* Previews local `/generative_ui` HTML artifacts inside a sandboxed frame.
 
-  subgraph CTX["Billion-Context & Daemons"]
-    CM["claude-mem Worker (:37777)"]
-    GR[".graphify.json (AST Graph)"]
-    CT["PROJECT_MAP.md (-98.3% Tokens)"]
-    KR["Kitsune Router (:4319)"]
-    GPU["tools/gpu_asr.py (ggml_vulkan)"]
-  end
+### 3. Data Workbench & Read-Only SQL Sources Pane
+* Accepts local `.csv` and `.json` files via drag-and-drop and loads them into Node v26 native `node:sqlite` (`DatabaseSync`).
+* Left view renders the chart and table; right `Sources` inspector exposes the exact origin path, schema types, transformation steps, and SQL query.
+* Enforces a strict read-only SQL gate (`assertReadOnlySelectSql`): only single-statement `SELECT` and `WITH` queries can run.
 
-  subgraph API["Hono Local Backend (:4320)"]
-    GUARD["assertNeverTouchesOfficialBinaries()"]
-    SCAN["tokenScanner + SHA-256 Quarantine"]
-    SQL["node:sqlite Read-Only Inspector"]
-    MTG["Meeting Extractor + Human Gate"]
-  end
-
-  subgraph UI["Onyx Studio Frontend (:5175)"]
-    M1["01. Bloat Control & 1-Click Presets"]
-    M2["02. Brain Stream & /generative_ui"]
-    M3["03. Interactive Chart + Sources SQL"]
-    M4["04. Post-Meeting Human Click Gate"]
-  end
-
-  SK & RL & MCP --> SCAN --> M1
-  BR & CM & GR & CT & KR --> M2
-  DB --> SQL --> M3
-  GPU --> MTG --> M4
-  GUARD -. Protects agy.exe .-> SCAN
-```
+### 4. Post-Meeting Action Executor
+* Routes uploaded meeting audio to `tools/gpu_asr.py` (`ggml_vulkan` GPU transcription) or accepts raw meeting notes.
+* Extracts summary bullets, decisions, and staged MCP payloads (`claude-mem`, `sqlite`).
+* **Human Approval Gate**: staged MCP payloads stay locked in `PENDING_HUMAN_APPROVAL` until an operator explicitly clicks **Approve** or **Reject**.
 
 ---
 
-## Estética Google Antigravity (`Nov-2026 Onyx Spec`)
-
-| Token Visual | Valor Hex / Regra | Aplicação no Dashboard |
-| :--- | :--- | :--- |
-| **`--agy-canvas`** | `#0B0D10` | Superfície primária ultra-escura (zero fadiga visual, zero neon genérico). |
-| **`--agy-surface`** | `#13161B` | Cards elevados Material Design 3 com contraste controlado. |
-| **`--agy-border`** | `#232832` (`1px solid`) | Hairline borders sutis separando painéis de telemetria e tabelas. |
-| **`--agy-accent`** | `#8AB4F8` (Google Blue Dark) | Indicadores de foco, barras de orçamento de tokens e pílulas ativas. |
-| **`--agy-ok / warn / danger`** | `#81C995` / `#F29900` / `#F28B82` | Semântica oficial Google Dark para integridade SHA-256, alertas de colisão e bloqueios. |
-| **Typography** | `Google Sans`, `Inter`, `JetBrains Mono` | Números tabulares (`tnum`) para contagem de tokens e monoespaçada para SQL/caminhos. |
-| **Bottom Command Bar** | Ancorada na base (`Ctrl+K` / Filtro) | Navegação rápida entre os 4 módulos + ativação em 1 clique do preset `Coding Lean`. |
-
----
-
-## Ecossistema Billion-Context (`claude-mem` + `Graphify` + `Cartographer`)
-
-O projeto opera integrado aos 3 motores de economia extrema de contexto:
-1. **`claude-mem` (`http://127.0.0.1:37777`)**: Daemon ativo em segundo plano persistindo memórias estruturadas (`save_memory`), listas de estado (`work_state_write`) e corpus semântico (`antigravity-dashboard-corpus`).
-2. **`Graphify + PonyTail` (`.graphify.json`)**: Grafo estrutural AST indexando arquivos e arestas de dependência para leitura fatiada (`StartLine`/`EndLine`) sem leituras cegas.
-3. **`Cartographer` (`PROJECT_MAP.md`)**: Mapa hierárquico estático do repositório que reduz a pegada de descoberta em **-98.3%** (`75.013 tokens` economizados por sessão).
-
----
-
-## Segurança ToS Section 6 (`Zero Binary Patching`)
-
-Diferente de modificadores invasivos que alteram binários `.asar` ou executáveis e causam bloqueios de conta, o **Antigravity Dashboard** possui uma trava em nível de código (`assertNeverTouchesOfficialBinaries` em `server/paths.ts`):
-- **Jamais toca** em `~/.gemini/bin/agy.exe` ou qualquer `.exe`, `.dll` ou `.asar`.
-- Opera exclusivamente sobre arquivos de configuração documentados e pastas de skills do usuário, criando snapshots verificados por **SHA-256** em `backups/` antes de qualquer preset.
-
----
-
-## Como Executar Localmente
-
-```powershell
-# 1. Instalar dependências
-npm install
-
-# 2. Rodar suíte de verificação (Vitest — 6/6 testes com asserções negativas de segurança)
-npm test
-
-# 3. Iniciar Backend (:4320) + Frontend Onyx (:5175)
-npm run dev
-```
-
-Acesse **`http://localhost:5175`** no navegador.
-
----
-
-## Estrutura de Diretórios
+## Project Layout
 
 ```text
 Antigravity Dashboard/
-├── docs/assets/                   # Banners SVG vetoriais (Onyx Hero + Arquitetura)
-├── backups/                       # Snapshots SHA-256 de mcp_config.json e quarentena reversível
+├── docs/
+│   ├── README.zh-CN.md            # Simplified Chinese documentation
+│   ├── README.pt-BR.md            # Portuguese documentation
+│   └── assets/                    # Brand mark and architecture diagrams
+├── backups/                       # SHA-256 MCP snapshots and skill quarantine ledger
 ├── server/
-│   ├── index.ts                   # Servidor Hono (porta 4320)
-│   ├── paths.ts                   # Guardas ToS Section 6 e resolução de caminhos Windows
+│   ├── index.ts                   # Hono API server (127.0.0.1:4320)
+│   ├── paths.ts                   # Windows path resolver + ToS binary guard
 │   └── services/
-│       ├── tokenScanner.ts        # Detector de skills duplicadas e prompts >250 linhas
-│       ├── profileManager.ts      # Presets de 1 clique (Coding Lean, Frontend, TJTO, Video, Restore)
-│       ├── transcriptReader.ts    # Stream de brain/<id>/transcript.jsonl + Kitsune :4319 + claude-mem :37777
-│       ├── sqliteInspector.ts     # Motor nativo node:sqlite + guarda Read-Only SELECT/WITH
-│       └── meetingPipeline.ts     # Ponte GPU Vulkan (tools/gpu_asr.py) + Human Approval Gate
+│       ├── tokenScanner.ts        # Token & duplicate skill scanner
+│       ├── profileManager.ts      # Atomic quarantine and preset switcher
+│       ├── transcriptReader.ts    # Brain JSONL reader + Kitsune/claude-mem probes
+│       ├── sqliteInspector.ts     # Native node:sqlite engine + read-only guard
+│       └── meetingPipeline.ts     # Vulkan GPU ASR bridge + human approval queue
 ├── src/
-│   ├── App.tsx                    # Shell principal Onyx + barra inferior M3
-│   ├── styles/onyx.css            # Tokens Google Antigravity Nov-2026 (#0B0D10 / #13161B / #232832)
-│   └── components/                # TopTelemetryBar, BottomCommandBar e Módulos 1 a 4
+│   ├── App.tsx                    # Workspace shell
+│   ├── styles/onyx.css            # Surface and typography tokens
+│   └── components/                # Module views and command bar
 ├── tests/
-│   └── dashboard.test.ts          # Suíte Vitest (Uncle Bob Gate: testes positivos, negativos e mutação)
-├── .graphify.json                 # Grafo AST gerado pelo Graphify + PonyTail
-├── PROJECT_MAP.md                 # Mapa estrutural gerado pelo Cartographer (-98.3% tokens)
-└── organizer.md                   # Checkpoint de restauração Auto-Organizer
+│   └── dashboard.test.ts          # Vitest suite (security + mutation assertions)
+├── .graphify.json                 # AST dependency graph (20 files, 48 edges)
+└── PROJECT_MAP.md                 # Static symbol map
 ```
+
+---
+
+## Quickstart
+
+Requires **Node.js v22.5+** (tested on `v26.13.1` with built-in `node:sqlite`) and **Python 3.12+** (optional, for `gpu_asr.py` Vulkan transcription).
+
+```powershell
+# Install packages
+npm install
+
+# Run security and unit tests (Vitest)
+npm test
+
+# Start API (:4320) and Web UI (:5175)
+npm run dev
+```
+
+Open `http://localhost:5175` in your browser.
